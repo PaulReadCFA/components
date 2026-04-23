@@ -1,5 +1,5 @@
 /* ================================================================
-   CFA Canvas Component Library  —  cfa-components.css  v2.2
+   CFA Canvas Component Library  —  cfa-components.css  v2.5
    ─────────────────────────────────────────────────────────────
    Canvas deployment : Admin > Themes > Custom CSS (paste all)
    Local dev         : <link rel="stylesheet" href="cfa-components.css">
@@ -57,6 +57,24 @@
     --cfa-radius:       4px;
     --cfa-radius-lg:    8px;
     --cfa-ease:         160ms ease;
+
+    /* Curriculum shells — parity with DesignPLUS / production class colours */
+    --cfa-curriculum-shaded-bg:       #f2f9ff;
+    --cfa-curriculum-shaded-border:     #e4f3ff;
+    --cfa-curriculum-example-bg:      #e4f3ff;
+    --cfa-curriculum-example-border:  #b8d9f5;
+    --cfa-curriculum-discussion-bg:   #f5f3ff;
+    --cfa-curriculum-discussion-border:#ebe9ff;
+    --cfa-curriculum-case-bg:         #f2fbf7;
+    --cfa-curriculum-case-border:     #9cf6b5;
+    --cfa-curriculum-exercise-bg:     #fff5e5;
+    --cfa-curriculum-exercise-border: #ffeccc;
+    --cfa-curriculum-los-bg:          #f9f9f9;
+    --cfa-curriculum-los-border:      #e5e5e5;
+    --cfa-curriculum-reflist-bg:      #f7f7f7;
+    --cfa-curriculum-reflist-border:  #e0e0e0;
+    --cfa-curriculum-overview-bg:     #fefaf2;
+    --cfa-curriculum-overview-border: #fdf5e5;
   }
   
   
@@ -101,7 +119,10 @@
     transition: background var(--cfa-ease);
   }
   .cfa-expand__trigger:hover              { background: #0d0080; }
-  .cfa-expand__trigger:focus-visible      { outline: 3px solid var(--cfa-cyan); outline-offset: -3px; }
+  .cfa-expand__trigger:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
   
   .cfa-expand[data-open] > .cfa-expand__trigger        { background: var(--cfa-bright-blue); }
   .cfa-expand[data-open] > .cfa-expand__trigger:hover  { background: #1a56e8; }
@@ -173,7 +194,10 @@
     transition: background var(--cfa-ease), color var(--cfa-ease);
   }
   .cfa-accordion__ctrl-btn:hover         { background: var(--cfa-dark-blue); color: #fff; }
-  .cfa-accordion__ctrl-btn:focus-visible { outline: 3px solid var(--cfa-cyan); outline-offset: 2px; }
+  .cfa-accordion__ctrl-btn:focus-visible {
+    outline: 3px solid var(--cfa-dark-blue);
+    outline-offset: 2px;
+  }
   
   /* Strip margin/double-border from nested .cfa-expand items */
   .cfa-accordion > .cfa-expand {
@@ -246,7 +270,10 @@
     border-color: var(--cfa-safe-blue);
     box-shadow: 0 2px 8px rgba(34,85,204,.3);
   }
-  .cfa-tabs__tab:focus-visible { outline: 3px solid var(--cfa-cyan); outline-offset: 2px; }
+  .cfa-tabs__tab:focus-visible {
+    outline: 3px solid var(--cfa-dark-blue);
+    outline-offset: 2px;
+  }
   
   .cfa-tabs__panel {
     padding: 1.25em 1.1em;
@@ -292,7 +319,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--cfa-bright-blue);
+    color: var(--cfa-safe-blue);
     margin-bottom: 0.5em;
   }
   .cfa-equation__num {
@@ -337,7 +364,8 @@
   }
   
   .cfa-list--check li::before   { content: '\2713'; color: var(--cfa-pine);        font-weight: 700; }
-  .cfa-list--cross li::before   { content: '\2715'; color: var(--cfa-orange);      font-weight: 700; }
+  /* Darker orange for AA text contrast on white (#FF8861 fails) */
+  .cfa-list--cross li::before   { content: '\2715'; color: #b9381a;                 font-weight: 700; }
   .cfa-list--arrow li::before   { content: '\2192'; color: var(--cfa-bright-blue); font-weight: 600; }
   .cfa-list--dash  li::before   { content: '\2014'; color: var(--cfa-c-muted); }
   .cfa-list--diamond li::before { content: '\25C6'; color: var(--cfa-purple); font-size: 0.65em; top: 0.55em; }
@@ -432,35 +460,46 @@
   /* ================================================================
      07  CALLOUT BOXES   .cfa-callout
      ─────────────────────────────────────────────────────────────
-     DesignPLUS-style family with .cfa-feature-box: soft tinted shell,
-     centred column head (large circular icon + title), body separated
-     by a light border-top. Titles use dark accent text on the shell
-     (not a solid inverse-colour bar).
-  
-     WCAG: warning/stop use dark text on light tinted shells; brand
-     orange is not used as a solid header with white type.
+     Same shell pattern as .cfa-box: centred icon +
+     title, body below a light divider. Colours match the CFA Program
+     curriculum / DesignPLUS box menu (cfa-curriculum-* production tags).
   
      HTML:
-       <div class="cfa-callout cfa-callout--note">
+       <div class="cfa-callout cfa-callout--shaded">
          <div class="cfa-callout__head">
            <span class="cfa-callout__icon">
              <i class="fas fa-info-circle" aria-hidden="true"></i>
            </span>
-           <span class="cfa-callout__title">Note</span>
+           <span class="cfa-callout__title">Shaded box title</span>
          </div>
          <div class="cfa-callout__body"><p>…</p></div>
        </div>
   
-     Variants: --note  --warning  --key  --tip  --stop
+     Curriculum modifiers (production menu):
+       --shaded      Shaded box (supplemental)     fa-info-circle
+       --example     Example box                   fa-book-reader
+       --discussion  Discussion                    fa-comments
+       --case-study  Case study                    fa-cogs
+       --exercise    Exercise / knowledge check    fa-pencil-alt
+       --los         Learning outcomes             fa-list-ul
+       --reflist     Reference list                fa-clipboard-list
+       --overview    LM overview / summary shell   fa-list-alt
+  
+     Legacy aliases (same paint as above): --note → shaded, --key → example,
+     --tip → discussion, --warning → exercise. Optional red shell: --stop
+     (editorial emphasis — not a curriculum menu item).
+  
+     A bare <div class="cfa-callout"> (no --* modifier) uses the LOS shell;
+     prefer explicit --los in new markup.
      ================================================================ */
   .cfa-callout {
     margin-block: 1.25rem;
     border-radius: var(--cfa-radius-lg);
     overflow: hidden;
-    border: 1px solid #c8d8ee;
-    background: #eaf1fb;
+    border: 1px solid var(--cfa-curriculum-los-border);
+    background: var(--cfa-curriculum-los-bg);
   }
-  
+
   .cfa-callout__head {
     display: flex;
     flex-direction: column;
@@ -469,9 +508,9 @@
     gap: 0.55em;
     padding: 1.45em 1.4em 1.05em;
     background: transparent;
-    color: var(--cfa-dark-blue);
+    color: #2a2a2a;
   }
-  
+
   .cfa-callout__icon {
     display: inline-flex;
     align-items: center;
@@ -480,16 +519,16 @@
     width: 3.2em;
     height: 3.2em;
     border-radius: 50%;
-    background: rgba(34, 85, 204, 0.14);
-    border: 2px solid rgba(34, 85, 204, 0.28);
-    color: var(--cfa-safe-blue);
+    background: rgba(0, 0, 0, 0.06);
+    border: 2px solid rgba(0, 0, 0, 0.12);
+    color: #3d3d3d;
     font-size: 1.25em;
     line-height: 1;
   }
   .cfa-callout__icon .fa,
   .cfa-callout__icon .fas,
   .cfa-callout__icon .far { font-size: 1em; line-height: 1; }
-  
+
   .cfa-callout__title {
     font-size: 1.05em;
     font-weight: 600;
@@ -497,9 +536,11 @@
     letter-spacing: 0.02em;
     text-transform: none;
   }
-  
+
   .cfa-callout__body {
-    border-top: 1px solid #c0d0e4;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #dcdcdc;
     padding: 1.05em 1.45em 1.3em;
     font-size: 0.93em;
     line-height: 1.65;
@@ -508,79 +549,159 @@
   }
   .cfa-callout__body > *:first-child { margin-top: 0; }
   .cfa-callout__body > *:last-child  { margin-bottom: 0; }
-  
-  /* ── Variants ─────────────────────────────────────────────── */
-  
-  .cfa-callout--note {
-    background: #eaf1fb;
-    border-color: #c8d8ee;
+
+  /* Explicit LOS — same shell as base .cfa-callout (optional class) */
+  .cfa-callout--los {
+    border: 1px solid var(--cfa-curriculum-los-border);
+    background: var(--cfa-curriculum-los-bg);
   }
-  .cfa-callout--note .cfa-callout__head   { color: var(--cfa-dark-blue); }
-  .cfa-callout--note .cfa-callout__title  { color: var(--cfa-dark-blue); }
+
+  /* ── Shaded box (cfa-curriculum-shaded-box) ─────────────────── */
+  .cfa-callout--shaded,
+  .cfa-callout--note {
+    border: 1px solid var(--cfa-curriculum-shaded-border);
+    background: var(--cfa-curriculum-shaded-bg);
+  }
+  .cfa-callout--shaded .cfa-callout__head,
+  .cfa-callout--note .cfa-callout__head,
+  .cfa-callout--shaded .cfa-callout__title,
+  .cfa-callout--note .cfa-callout__title { color: var(--cfa-dark-blue); }
+  .cfa-callout--shaded .cfa-callout__icon,
   .cfa-callout--note .cfa-callout__icon {
-    background: rgba(34, 85, 204, 0.14);
-    border-color: rgba(34, 85, 204, 0.28);
+    background: rgba(34, 85, 204, 0.12);
+    border-color: rgba(34, 85, 204, 0.22);
     color: var(--cfa-safe-blue);
   }
+  .cfa-callout--shaded .cfa-callout__body,
   .cfa-callout--note .cfa-callout__body {
-    border-top-color: #c0d0e4;
+    border-top-color: #cfe4f8;
     color: #06005A;
   }
-  
-  .cfa-callout--warning {
-    background: #fff8f0;
-    border-color: #ffd0a8;
-  }
-  .cfa-callout--warning .cfa-callout__head  { color: #3d2200; }
-  .cfa-callout--warning .cfa-callout__title { color: #3d2200; }
-  .cfa-callout--warning .cfa-callout__icon {
-    background: rgba(255, 136, 97, 0.18);
-    border-color: rgba(180, 90, 40, 0.35);
-    color: #a84318;
-  }
-  .cfa-callout--warning .cfa-callout__body {
-    border-top-color: #f0c8a0;
-    color: #3d2200;
-  }
-  
+
+  /* ── Example box (cfa-curriculum-example-box) ───────────────── */
+  .cfa-callout--example,
   .cfa-callout--key {
-    background: #eaf7f4;
-    border-color: #b5ddd7;
+    border: 2px solid var(--cfa-curriculum-example-border);
+    background: var(--cfa-curriculum-example-bg);
   }
-  .cfa-callout--key .cfa-callout__head   { color: var(--cfa-pine); }
-  .cfa-callout--key .cfa-callout__title  { color: var(--cfa-pine); }
+  .cfa-callout--example .cfa-callout__head,
+  .cfa-callout--key .cfa-callout__head,
+  .cfa-callout--example .cfa-callout__title,
+  .cfa-callout--key .cfa-callout__title { color: var(--cfa-dark-blue); }
+  .cfa-callout--example .cfa-callout__icon,
   .cfa-callout--key .cfa-callout__icon {
-    background: rgba(7, 81, 79, 0.12);
-    border-color: rgba(7, 81, 79, 0.25);
-    color: var(--cfa-pine);
+    background: rgba(6, 0, 90, 0.1);
+    border-color: rgba(6, 0, 90, 0.18);
+    color: var(--cfa-dark-blue);
   }
+  .cfa-callout--example .cfa-callout__body,
   .cfa-callout--key .cfa-callout__body {
-    border-top-color: #b5ddd7;
-    color: #062e1e;
+    border-top-color: #a8c8eb;
+    color: #06005A;
   }
-  
+
+  /* ── Discussion ─────────────────────────────────────────────── */
+  .cfa-callout--discussion,
   .cfa-callout--tip {
-    background: #f2eeff;
-    border-color: #d0c0f0;
+    border: 2px solid var(--cfa-curriculum-discussion-border);
+    background: var(--cfa-curriculum-discussion-bg);
   }
-  .cfa-callout--tip .cfa-callout__head   { color: var(--cfa-purple); }
-  .cfa-callout--tip .cfa-callout__title  { color: var(--cfa-purple); }
+  .cfa-callout--discussion .cfa-callout__head,
+  .cfa-callout--tip .cfa-callout__head,
+  .cfa-callout--discussion .cfa-callout__title,
+  .cfa-callout--tip .cfa-callout__title { color: #3d2f6b; }
+  .cfa-callout--discussion .cfa-callout__icon,
   .cfa-callout--tip .cfa-callout__icon {
     background: rgba(122, 70, 255, 0.12);
-    border-color: rgba(122, 70, 255, 0.25);
+    border-color: rgba(122, 70, 255, 0.22);
     color: var(--cfa-purple);
   }
+  .cfa-callout--discussion .cfa-callout__body,
   .cfa-callout--tip .cfa-callout__body {
-    border-top-color: #d0c0f0;
+    border-top-color: #dcd4f0;
     color: #1e0b40;
   }
-  
-  .cfa-callout--stop {
-    background: #fdecea;
-    border-color: #f5b0a8;
+
+  /* ── Case study (curriculum-case-study-box) ─────────────────── */
+  .cfa-callout--case-study {
+    border: 2px solid var(--cfa-curriculum-case-border);
+    background: var(--cfa-curriculum-case-bg);
   }
-  .cfa-callout--stop .cfa-callout__head   { color: #7f1212; }
-  .cfa-callout--stop .cfa-callout__title  { color: #7f1212; }
+  .cfa-callout--case-study .cfa-callout__head,
+  .cfa-callout--case-study .cfa-callout__title { color: #06402d; }
+  .cfa-callout--case-study .cfa-callout__icon {
+    background: rgba(7, 81, 79, 0.1);
+    border-color: rgba(7, 81, 79, 0.22);
+    color: var(--cfa-pine);
+  }
+  .cfa-callout--case-study .cfa-callout__body {
+    border-top-color: #b8edd0;
+    color: #0a2e1e;
+  }
+
+  /* ── Exercise / knowledge check (cfa-curriculum-exercise-box) ─ */
+  .cfa-callout--exercise,
+  .cfa-callout--warning {
+    border: 2px solid var(--cfa-curriculum-exercise-border);
+    background: var(--cfa-curriculum-exercise-bg);
+  }
+  .cfa-callout--exercise .cfa-callout__head,
+  .cfa-callout--warning .cfa-callout__head,
+  .cfa-callout--exercise .cfa-callout__title,
+  .cfa-callout--warning .cfa-callout__title { color: #3d2200; }
+  .cfa-callout--exercise .cfa-callout__icon,
+  .cfa-callout--warning .cfa-callout__icon {
+    background: rgba(255, 136, 97, 0.16);
+    border-color: rgba(180, 90, 40, 0.3);
+    color: #a84318;
+  }
+  .cfa-callout--exercise .cfa-callout__body,
+  .cfa-callout--warning .cfa-callout__body {
+    border-top-color: #f0d4b0;
+    color: #3d2200;
+  }
+
+  /* ── Reference list (cfa-curriculum-reflist) ───────────────── */
+  .cfa-callout--reflist {
+    border: 1px solid var(--cfa-curriculum-reflist-border);
+    background: var(--cfa-curriculum-reflist-bg);
+  }
+  .cfa-callout--reflist .cfa-callout__head,
+  .cfa-callout--reflist .cfa-callout__title { color: #333; }
+  .cfa-callout--reflist .cfa-callout__icon {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #4a4a4a;
+  }
+  .cfa-callout--reflist .cfa-callout__body {
+    border-top-color: #d0d0d0;
+    color: var(--cfa-black);
+  }
+
+  /* ── LM overview / summary (cfa-curriculum-overview-box) ───── */
+  .cfa-callout--overview {
+    border: 2px solid var(--cfa-curriculum-overview-border);
+    background: var(--cfa-curriculum-overview-bg);
+  }
+  .cfa-callout--overview .cfa-callout__head,
+  .cfa-callout--overview .cfa-callout__title { color: #4a3a1a; }
+  .cfa-callout--overview .cfa-callout__icon {
+    background: rgba(139, 90, 20, 0.12);
+    border-color: rgba(139, 90, 20, 0.22);
+    color: #6b4810;
+  }
+  .cfa-callout--overview .cfa-callout__body {
+    border-top-color: #f0e4c8;
+    color: #3d2e12;
+  }
+
+  /* ── Editorial emphasis (optional; not a curriculum menu item) ─ */
+  .cfa-callout--stop {
+    border: 1px solid #f5b0a8;
+    background: #fdecea;
+  }
+  .cfa-callout--stop .cfa-callout__head,
+  .cfa-callout--stop .cfa-callout__title { color: #7f1212; }
   .cfa-callout--stop .cfa-callout__icon {
     background: rgba(211, 47, 47, 0.14);
     border-color: rgba(183, 28, 28, 0.32);
@@ -590,12 +711,12 @@
     border-top-color: #f0b8b0;
     color: #3d0d08;
   }
-  
-  
+
+
   /* ================================================================
      08  EXPLORATION QUESTIONS   .cfa-exploration
      ─────────────────────────────────────────────────────────────
-     Same soft shell + centred head family as .cfa-feature-box.
+     Same soft shell + centred head family as .cfa-callout / .cfa-box.
      Composed from .cfa-tabs + .cfa-expand — NO extra JS needed.
      Optional: <span class="cfa-exploration__title">…</span> after the
      heading icon. See demo-exploration.html for the full HTML pattern.
@@ -669,7 +790,7 @@
     box-shadow: 0 2px 8px rgba(34,85,204,.28);
   }
   .cfa-exploration .cfa-tabs__tab:focus-visible {
-    outline: 3px solid var(--cfa-cyan);
+    outline: 3px solid var(--cfa-dark-blue);
     outline-offset: 2px;
   }
   
@@ -744,10 +865,11 @@
   /* ================================================================
      09  LESSON BOX   .cfa-box
      ─────────────────────────────────────────────────────────────
-     DesignPLUS-style learner card: same soft shell + centred head
-     pattern as .cfa-feature-box. Wrap the heading words in
-     <span class="cfa-box__title">…</span> for the clearest markup
-     (plain text after the icon still works).
+     Same shell + centred head pattern as .cfa-callout, but colours
+     come from the CFA brand palette (lime, aqua, mauve, cyan) —
+     visually distinct from curriculum callouts above. Use for
+     author-authored pedagogy (WYWL, reflection prompts, etc.) and
+     for new / repurposed tags outside the production curriculum menu.
   
      HTML:
        <div class="cfa-box cfa-box--learn">
@@ -766,8 +888,8 @@
     margin-block: 1.25rem;
     border-radius: var(--cfa-radius-lg);
     overflow: hidden;
-    border: 1px solid #c8d8ee;
-    background: #eaf1fb;
+    border: 1px solid #c4c88a;
+    background: #f0f2d4;
   }
   .cfa-box__head {
     display: flex;
@@ -782,13 +904,13 @@
     letter-spacing: 0.02em;
     text-transform: none;
   }
-  
+
   .cfa-box__title {
     font-size: 1.1em;
     line-height: 1.3;
     max-width: 28em;
   }
-  
+
   .cfa-box__icon {
     display: inline-flex;
     align-items: center;
@@ -797,18 +919,18 @@
     width: 3.2em;
     height: 3.2em;
     border-radius: 50%;
-    background: rgba(34, 85, 204, 0.14);
-    border: 2px solid rgba(34, 85, 204, 0.28);
-    color: var(--cfa-safe-blue);
+    background: rgba(6, 0, 90, 0.08);
+    border: 2px solid rgba(6, 0, 90, 0.16);
+    color: var(--cfa-dark-blue);
     font-size: 1.25em;
     line-height: 1;
   }
   .cfa-box__icon .fa,
   .cfa-box__icon .fas,
   .cfa-box__icon .far { font-size: 1em; line-height: 1; }
-  
+
   .cfa-box__body {
-    border-top: 1px solid #c0d0e4;
+    border-top: 1px solid #c9cc8a;
     padding: 1.05em 1.45em 1.3em;
     background: transparent;
     font-size: 0.93em;
@@ -817,60 +939,73 @@
   }
   .cfa-box__body p             { margin: 0 0 0.5em; }
   .cfa-box__body p:last-child  { margin-bottom: 0; }
-  
+
+  /* --learn — lime palette */
   .cfa-box--learn {
-    background: #eaf1fb;
-    border-color: #c8d8ee;
+    background: #f0f2d4;
+    border-color: #c4c88a;
   }
-  .cfa-box--learn .cfa-box__head  { color: var(--cfa-dark-blue); }
+  .cfa-box--learn .cfa-box__head,
   .cfa-box--learn .cfa-box__title { color: var(--cfa-dark-blue); }
   .cfa-box--learn .cfa-box__icon {
-    background: rgba(34, 85, 204, 0.14);
-    border-color: rgba(34, 85, 204, 0.28);
-    color: var(--cfa-safe-blue);
+    background: rgba(207, 212, 119, 0.45);
+    border-color: rgba(100, 105, 40, 0.35);
+    color: #4a4f18;
   }
-  .cfa-box--learn .cfa-box__body { border-top-color: #c0d0e4; }
-  
+  .cfa-box--learn .cfa-box__body { border-top-color: #c9cc8a; }
+
+  /* --summary — aqua palette */
   .cfa-box--summary {
-    background: #eaf7f4;
-    border-color: #b5ddd7;
+    background: #dff6f5;
+    border-color: #5ec9c4;
   }
-  .cfa-box--summary .cfa-box__head  { color: var(--cfa-pine); }
-  .cfa-box--summary .cfa-box__title { color: var(--cfa-pine); }
+  .cfa-box--summary .cfa-box__head,
+  .cfa-box--summary .cfa-box__title { color: #05403d; }
   .cfa-box--summary .cfa-box__icon {
-    background: rgba(7, 81, 79, 0.12);
-    border-color: rgba(7, 81, 79, 0.25);
+    background: rgba(99, 211, 208, 0.35);
+    border-color: rgba(7, 81, 79, 0.28);
     color: var(--cfa-pine);
   }
-  .cfa-box--summary .cfa-box__body { border-top-color: #b5ddd7; }
-  
+  .cfa-box--summary .cfa-box__body {
+    border-top-color: #7ed3cf;
+    color: #062e2c;
+  }
+
+  /* --reflection — mauve palette */
   .cfa-box--reflection {
-    background: #f2eeff;
-    border-color: #d0c0f0;
+    background: #fceef9;
+    border-color: #e0a8d4;
   }
-  .cfa-box--reflection .cfa-box__head  { color: var(--cfa-purple); }
-  .cfa-box--reflection .cfa-box__title { color: var(--cfa-purple); }
+  .cfa-box--reflection .cfa-box__head,
+  .cfa-box--reflection .cfa-box__title { color: #4a1a43; }
   .cfa-box--reflection .cfa-box__icon {
-    background: rgba(122, 70, 255, 0.12);
-    border-color: rgba(122, 70, 255, 0.25);
-    color: var(--cfa-purple);
+    background: rgba(236, 172, 229, 0.45);
+    border-color: rgba(122, 70, 255, 0.28);
+    color: #6b2a62;
   }
-  .cfa-box--reflection .cfa-box__body { border-top-color: #d0c0f0; color: #1e0b40; }
-  
+  .cfa-box--reflection .cfa-box__body {
+    border-top-color: #e8b8de;
+    color: #2a1026;
+  }
+
+  /* --example — cyan accent (lesson worked example, not curriculum example box) */
   .cfa-box--example {
-    background: #eef8f8;
-    border-color: #a0d0d0;
+    background: #e5f8ff;
+    border-color: #66ccf0;
   }
-  .cfa-box--example .cfa-box__head  { color: #066363; }
-  .cfa-box--example .cfa-box__title { color: #066363; }
+  .cfa-box--example .cfa-box__head,
+  .cfa-box--example .cfa-box__title { color: var(--cfa-dark-blue); }
   .cfa-box--example .cfa-box__icon {
-    background: rgba(6, 99, 99, 0.12);
-    border-color: rgba(6, 99, 99, 0.28);
-    color: #066363;
+    background: rgba(0, 187, 255, 0.22);
+    border-color: rgba(6, 0, 90, 0.2);
+    color: #005f82;
   }
-  .cfa-box--example .cfa-box__body { border-top-color: #a8d4d4; color: #0a2e2e; }
-  
-  
+  .cfa-box--example .cfa-box__body {
+    border-top-color: #7dd4f0;
+    color: #06005A;
+  }
+
+
   /* ================================================================
      10  COMPARISON ANCHOR   .cfa-compare
      ─────────────────────────────────────────────────────────────
@@ -1003,175 +1138,6 @@
     color: var(--cfa-dark-blue);
     padding: 1.2em 2em;
   }
-  
-  
-  /* ================================================================
-     12  FEATURE BOX   .cfa-feature-box
-     ─────────────────────────────────────────────────────────────
-     Cidilabs-style centered-icon content block. Bigger and more
-     display-prominent than .cfa-box. Used for Discussion prompts,
-     Examples, Activities, Exhibits, and Key Concepts.
-  
-     Font Awesome icons are available in Canvas. Use <i class="fa …">
-     inside .cfa-feature-box__icon. If FA is unavailable, use a plain
-     emoji or Unicode character — the circle container will still render.
-  
-     HTML:
-       <div class="cfa-feature-box cfa-feature-box--discussion">
-         <div class="cfa-feature-box__head">
-           <span class="cfa-feature-box__icon">
-             <i class="fa fa-comments" aria-hidden="true"></i>
-           </span>
-           <span class="cfa-feature-box__title">Discussion</span>
-         </div>
-         <div class="cfa-feature-box__body">
-           <p>Your prompt or content here.</p>
-         </div>
-       </div>
-  
-     Variants:
-       --discussion   bright-blue   fa-comments
-       --example      dark-blue     fa-search / fa-magnifying-glass
-       --activity     pine          fa-pencil / fa-pen
-       --exhibit      purple        fa-chart-bar / fa-table
-       --concept      cyan-dark     fa-lightbulb
-     ================================================================ */
-  
-  /* ---- Base shell ------------------------------------------- */
-  .cfa-feature-box {
-    margin-block: 1.5rem;
-    border-radius: var(--cfa-radius-lg);
-    border: 1px solid #c8d8ee;
-    background: #eaf1fb;
-    overflow: hidden;
-  }
-  
-  /* ---- Head: icon + title, centered ----------------------- */
-  .cfa-feature-box__head {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 1.6em 1.5em 1.1em;
-    gap: 0.6em;
-  }
-  
-  /* Circular icon badge */
-  .cfa-feature-box__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.2em;       /* ~51px at 16px base */
-    height: 3.2em;
-    border-radius: 50%;
-    background: rgba(50, 106, 255, 0.15);
-    color: var(--cfa-dark-blue);
-    font-size: 1.25em;  /* scales the icon inside */
-    border: 2px solid rgba(50, 106, 255, 0.25);
-    flex-shrink: 0;
-  }
-  /* FA icon sizing inside the badge */
-  .cfa-feature-box__icon .fa,
-  .cfa-feature-box__icon .fas,
-  .cfa-feature-box__icon .far,
-  .cfa-feature-box__icon .fab {
-    font-size: 1em;
-    line-height: 1;
-  }
-  
-  /* Title */
-  .cfa-feature-box__title {
-    font-size: 1.1em;
-    font-weight: 600;
-    color: var(--cfa-dark-blue);
-    line-height: 1.3;
-  }
-  
-  /* ---- Divider between head and body ----------------------- */
-  .cfa-feature-box__body {
-    border-top: 1px solid #c0d0e4;
-    padding: 1.1em 1.5em 1.4em;
-    font-size: 0.93em;
-    line-height: 1.7;
-    color: var(--cfa-black);
-  }
-  .cfa-feature-box__body > *:first-child { margin-top: 0; }
-  .cfa-feature-box__body > *:last-child  { margin-bottom: 0; }
-  
-  /* Optional sub-heading inside body (e.g. "Example 4 title") */
-  .cfa-feature-box__subtitle {
-    display: block;
-    font-weight: 700;
-    font-size: 1em;
-    color: var(--cfa-dark-blue);
-    border-bottom: 1px solid #c0d0e4;
-    padding-bottom: 0.5em;
-    margin-bottom: 0.75em;
-  }
-  
-  /* ---- Variant: Discussion — safe blue (6.48:1) -------------- */
-  .cfa-feature-box--discussion {
-    background: #eaf1fb;
-    border-color: #c8d8ee;
-  }
-  .cfa-feature-box--discussion .cfa-feature-box__icon {
-    background: rgba(34, 85, 204, 0.14);
-    border-color: rgba(34, 85, 204, 0.28);
-    color: var(--cfa-safe-blue);
-  }
-  
-  /* ---- Variant: Example — dark blue (18.18:1) ---------------- */
-  .cfa-feature-box--example {
-    background: #edf2fb;
-    border-color: #c5d2e8;
-  }
-  .cfa-feature-box--example .cfa-feature-box__icon {
-    background: rgba(6, 0, 90, 0.1);
-    border-color: rgba(6, 0, 90, 0.2);
-    color: var(--cfa-dark-blue);
-  }
-  
-  /* ---- Variant: Activity — pine (9.13:1) --------------------- */
-  .cfa-feature-box--activity {
-    background: #eaf7f4;
-    border-color: #b5ddd7;
-  }
-  .cfa-feature-box--activity .cfa-feature-box__icon {
-    background: rgba(7, 81, 79, 0.12);
-    border-color: rgba(7, 81, 79, 0.25);
-    color: var(--cfa-pine);
-  }
-  .cfa-feature-box--activity .cfa-feature-box__title   { color: var(--cfa-pine); }
-  .cfa-feature-box--activity .cfa-feature-box__subtitle { border-bottom-color: #b5ddd7; }
-  .cfa-feature-box--activity .cfa-feature-box__body    { border-top-color: #b5ddd7; }
-  
-  /* ---- Variant: Exhibit — purple (5.06:1) -------------------- */
-  .cfa-feature-box--exhibit {
-    background: #f2eeff;
-    border-color: #d0c0f0;
-  }
-  .cfa-feature-box--exhibit .cfa-feature-box__icon {
-    background: rgba(122, 70, 255, 0.12);
-    border-color: rgba(122, 70, 255, 0.25);
-    color: var(--cfa-purple);
-  }
-  .cfa-feature-box--exhibit .cfa-feature-box__title   { color: var(--cfa-purple); }
-  .cfa-feature-box--exhibit .cfa-feature-box__subtitle { border-bottom-color: #d0c0f0; }
-  .cfa-feature-box--exhibit .cfa-feature-box__body    { border-top-color: #d0c0f0; }
-  
-  /* ---- Variant: Concept — warm neutral ----------------------- */
-  .cfa-feature-box--concept {
-    background: #fdf6ee;
-    border-color: #e8d8c0;
-  }
-  .cfa-feature-box--concept .cfa-feature-box__icon {
-    background: rgba(176, 125, 43, 0.13);
-    border-color: rgba(176, 125, 43, 0.28);
-    color: #8a5e1a;
-  }
-  .cfa-feature-box--concept .cfa-feature-box__title   { color: #6b4810; }
-  .cfa-feature-box--concept .cfa-feature-box__subtitle { border-bottom-color: #e8d8c0; }
-  .cfa-feature-box--concept .cfa-feature-box__body    { border-top-color: #e8d8c0; }
 
 
 /* ================================================================

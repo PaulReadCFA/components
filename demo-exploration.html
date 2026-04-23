@@ -49,16 +49,39 @@
 
   .page { max-width: 760px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
 
-  .section { margin-bottom: 3rem; }
+  .section { margin-bottom: 3rem; scroll-margin-top: 72px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 0.75em;
+    border-bottom: 2px solid #06005A;
+    padding-bottom: 0.45rem; margin-bottom: 1.1rem;
+  }
+  .section-head h2 {
+    margin: 0;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.2rem; font-weight: 600; color: #06005A;
+  }
+  .badge {
+    font-size: 0.67rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; background: #06005A; color: #fff;
+    border-radius: 3px; padding: 0.2em 0.55em;
+  }
   .section-label {
     font-size: 0.69rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .1em; color: #646464; margin: 0 0 0.6rem;
+    letter-spacing: .1em; color: #555555; margin: 0 0 0.6rem;
   }
-  .note { font-size: 0.85rem; color: #646464; margin: 0 0 1.25rem; }
+  .note { font-size: 0.85rem; color: #555555; margin: 0 0 1.25rem; }
+  .demo-area {
+    background: #fff; border: 1px solid #E9E9E9;
+    border-radius: 8px; padding: 1.5rem; margin-bottom: 0.75rem;
+  }
+  .list-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 2rem;
+  }
+  @media (max-width: 560px) { .list-grid { grid-template-columns: 1fr; } }
 
   details.snippet summary {
     font-size: 0.77rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .05em; color: #646464;
+    letter-spacing: .05em; color: #555555;
     cursor: pointer; padding: 0.4rem 0; margin-top: 1rem;
   }
   details.snippet summary:hover { color: #06005A; }
@@ -263,35 +286,46 @@
 
 
   <!-- ============================================================
-    NOTES
+    IMPLEMENTATION NOTES (same callout pattern as demo-library §6)
     ============================================================ -->
   <section class="section" id="notes">
-    <p class="section-label">Implementation notes</p>
-    <div class="cfa-callout cfa-callout--note">
-      <div class="cfa-callout__head">
-        <i class="fas fa-info-circle cfa-callout__icon" aria-hidden="true"></i>
-        <span class="cfa-callout__title">No extra JS</span>
-      </div>
-      <div class="cfa-callout__body">
-        <p>The <code>.cfa-exploration</code> component uses the existing tab and expand behaviour from <code>cfa-components.js</code>. Nothing new to add.</p>
-      </div>
+    <div class="section-head">
+      <h2>Implementation notes</h2>
+      <span class="badge">CSS only · Font Awesome</span>
     </div>
-    <div class="cfa-callout cfa-callout--warning">
-      <div class="cfa-callout__head">
-        <i class="fas fa-exclamation-triangle cfa-callout__icon" aria-hidden="true"></i>
-        <span class="cfa-callout__title">Unique IDs per page</span>
-      </div>
-      <div class="cfa-callout__body">
-        <p>If two <code>.cfa-exploration</code> blocks appear on the same Canvas page, give each its own ID prefix — e.g. <code>eq2-t1</code> / <code>eq2-p1</code> — to avoid duplicate IDs breaking ARIA associations.</p>
-      </div>
-    </div>
-    <div class="cfa-callout cfa-callout--tip">
-      <div class="cfa-callout__head">
-        <i class="far fa-lightbulb cfa-callout__icon" aria-hidden="true"></i>
-        <span class="cfa-callout__title">Voice control</span>
-      </div>
-      <div class="cfa-callout__body">
-        <p>Each Check Answer button has a unique <code>aria-label</code> ("Check answer for Question 1", etc.) so Dragon NaturallySpeaking and Voice Control users can target specific buttons even though the visible text is identical.</p>
+    <p class="note">These use the same <strong>CFA Program box</strong> callouts as <a href="demo-library.html#callout">demo-library — section 6</a> (<code>cfa-callout--shaded</code>, <code>--exercise</code>, <code>--discussion</code>). Titles describe this page; modifiers match the curriculum menu.</p>
+
+    <div class="demo-area">
+      <div class="list-grid">
+        <div class="cfa-callout cfa-callout--shaded">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-info-circle" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">No extra JS</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>The <code>.cfa-exploration</code> component uses the existing tab and expand behaviour from <code>cfa-components.js</code>. Nothing new to add.</p>
+          </div>
+        </div>
+
+        <div class="cfa-callout cfa-callout--exercise">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-pencil-alt" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Unique IDs per page</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>If two <code>.cfa-exploration</code> blocks appear on the same Canvas page, give each its own ID prefix — e.g. <code>eq2-t1</code> / <code>eq2-p1</code> — to avoid duplicate IDs breaking ARIA associations.</p>
+          </div>
+        </div>
+
+        <div class="cfa-callout cfa-callout--discussion">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-comments" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Voice control</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Each Check Answer button has a unique <code>aria-label</code> ("Check answer for Question 1", etc.) so Dragon NaturallySpeaking and Voice Control users can target specific buttons even though the visible text is identical.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>

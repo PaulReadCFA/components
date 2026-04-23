@@ -185,6 +185,7 @@
 
   <h2 id="reference">Quick reference</h2>
   <p>All components live in <code>cfa-components.css</code>. The modifier pattern is <code>.cfa-[component]--[variant]</code>.</p>
+  <p><strong>CFA Program boxes vs additional boxes:</strong> <code>.cfa-callout</code> matches the <em>curriculum / DesignPLUS</em> production menu (shaded, example, exercise, etc.). <code>.cfa-box</code> uses the same layout with <em>brand palette</em> tints (lime, aqua, mauve, cyan) for new or repurposed tags outside that menu.</p>
 
   <h3>Interactive components (require JS)</h3>
   <table class="ref-table">
@@ -236,14 +237,14 @@
         <td><code>--check</code> <code>--cross</code> <code>--arrow</code> <code>--dash</code> <code>--diamond</code> <code>--numcircle</code> <code>--checkbox</code> <code>--checkbox-done</code> <code>--tasklist</code></td>
       </tr>
       <tr>
-        <td>Callout box</td>
+        <td>CFA Program boxes</td>
         <td><code>.cfa-callout</code></td>
-        <td><code>--note</code> <code>--warning</code> <code>--key</code> <code>--tip</code> <code>--stop</code></td>
+        <td><code>--shaded</code> <code>--example</code> <code>--discussion</code> <code>--case-study</code> <code>--exercise</code> <code>--los</code> <code>--reflist</code> <code>--overview</code> · legacy <code>--note</code> <code>--key</code> <code>--tip</code> <code>--warning</code> · optional editorial <code>--stop</code></td>
       </tr>
       <tr>
-        <td>Lesson box</td>
+        <td>Additional boxes</td>
         <td><code>.cfa-box</code></td>
-        <td><code>--learn</code> <code>--summary</code> <code>--reflection</code> <code>--example</code></td>
+        <td><code>--learn</code> <code>--summary</code> <code>--reflection</code> <code>--example</code> (palette shells)</td>
       </tr>
       <tr>
         <td>Comparison anchor</td>
@@ -254,11 +255,6 @@
         <td>Quote box</td>
         <td><code>.cfa-quote</code></td>
         <td><code>--standard</code> <code>--pullquote</code></td>
-      </tr>
-      <tr>
-        <td>Feature box</td>
-        <td><code>.cfa-feature-box</code></td>
-        <td><code>--discussion</code> <code>--example</code> <code>--activity</code> <code>--exhibit</code> <code>--concept</code></td>
       </tr>
     </tbody>
   </table>
@@ -272,12 +268,15 @@
       <tr><td><code>--cfa-dark-blue</code></td>   <td>#06005A</td><td>Headers, triggers, primary text</td></tr>
       <tr><td><code>--cfa-bright-blue</code></td>  <td>#326AFF</td><td>Active states, borders, labels</td></tr>
       <tr><td><code>--cfa-warm-white</code></td>   <td>#F7ECDE</td><td>Panel backgrounds</td></tr>
-      <tr><td><code>--cfa-purple</code></td>        <td>#7A46FF</td><td>Reflection, diamond list, tip</td></tr>
-      <tr><td><code>--cfa-cyan</code></td>          <td>#00BBFF</td><td>Focus rings only</td></tr>
-      <tr><td><code>--cfa-pine</code></td>          <td>#07514F</td><td>Check answer, key takeaway, check list</td></tr>
-      <tr><td><code>--cfa-orange</code></td>        <td>#FF8861</td><td>Warning, cross list</td></tr>
+      <tr><td><code>--cfa-purple</code></td>        <td>#7A46FF</td><td>Diamond list, discussion tints</td></tr>
+      <tr><td><code>--cfa-cyan</code></td>          <td>#00BBFF</td><td>Focus rings, lesson example box</td></tr>
+      <tr><td><code>--cfa-pine</code></td>          <td>#07514F</td><td>Check answer, check list, case-study accents</td></tr>
+      <tr><td><code>--cfa-orange</code></td>        <td>#FF8861</td><td>Cross list, warm accents</td></tr>
+      <tr><td><code>--cfa-lime</code></td>         <td>#CFD477</td><td>Lesson box (learn)</td></tr>
+      <tr><td><code>--cfa-aqua</code></td>          <td>#63D3D0</td><td>Lesson box (summary)</td></tr>
+      <tr><td><code>--cfa-mauve</code></td>        <td>#ECACE5</td><td>Lesson box (reflection)</td></tr>
       <tr><td><code>--cfa-grey-light</code></td>    <td>#E9E9E9</td><td>Borders, tab track</td></tr>
-      <tr><td><code>--cfa-grey-dark</code></td>     <td>#646464</td><td>Muted text, empty checkboxes</td></tr>
+      <tr><td><code>--cfa-grey-dark</code></td>     <td>#555555</td><td>Muted text, empty checkboxes</td></tr>
     </tbody>
   </table>
 

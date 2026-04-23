@@ -120,11 +120,10 @@
   <a href="#tabs">Tabs</a>
   <a href="#equation">Equation</a>
   <a href="#lists">Lists</a>
-  <a href="#callout">Callout</a>
-  <a href="#box">Lesson box</a>
+  <a href="#callout">CFA Program boxes</a>
+  <a href="#box">Additional boxes</a>
   <a href="#compare">Compare</a>
   <a href="#quote">Quote</a>
-  <a href="#feature-box">Feature box</a>
 </nav>
 
 <main class="page">
@@ -450,102 +449,131 @@
 
 
   <!-- ============================================================
-    6. CALLOUT BOXES
+    6. CFA PROGRAM BOXES (curriculum / DesignPLUS menu)
     ============================================================ -->
   <section class="section" id="callout">
     <div class="section-head">
-      <h2>6 — Callout Boxes</h2>
+      <h2>6 — CFA Program boxes</h2>
       <span class="badge">CSS only · Font Awesome</span>
     </div>
-    <p class="note">Soft tinted card with centred icon and title (same DesignPLUS-style family as the feature box). Font Awesome icons recommended; emoji fallback works fine.</p>
+    <p class="note">Colours align with the CFA Program curriculum box menu (e.g. <code>cfa-curriculum-shaded-box</code>, <code>cfa-curriculum-exercise-box</code>). Same centred-head shell as <code>.cfa-box</code> (section 7). For <strong>Example box</strong>, use <code>fas fa-book-reader</code> (or similar) rather than a magnifying glass so the icon is not mistaken for an expand control. Legacy modifiers <code>--note</code>, <code>--key</code>, <code>--tip</code>, <code>--warning</code>, <code>--stop</code> still work as aliases — prefer the curriculum names below for new markup.</p>
 
     <div class="demo-area">
-      <div class="cfa-callout cfa-callout--note">
-        <div class="cfa-callout__head">
-          <span class="cfa-callout__icon"><i class="fas fa-info-circle" aria-hidden="true"></i></span>
-          <span class="cfa-callout__title">Note</span>
+      <div class="list-grid">
+        <div class="cfa-callout cfa-callout--shaded">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-info-circle" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Shaded box</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Supplemental sidebar content — production <code>cfa-curriculum-shaded-box</code>.</p>
+          </div>
         </div>
-        <div class="cfa-callout__body">
-          <p>This reading assumes basic familiarity with DCF analysis. Review Reading 7 if needed.</p>
-        </div>
-      </div>
 
-      <div class="cfa-callout cfa-callout--warning">
-        <div class="cfa-callout__head">
-          <span class="cfa-callout__icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></span>
-          <span class="cfa-callout__title">Exam Warning</span>
+        <div class="cfa-callout cfa-callout--example">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-book-reader" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Example box</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Real-world example — <code>cfa-curriculum-example-box</code>.</p>
+          </div>
         </div>
-        <div class="cfa-callout__body">
-          <p>Confusing nominal and effective annual rates is a common source of errors in the exam.</p>
-        </div>
-      </div>
 
-      <div class="cfa-callout cfa-callout--key">
-        <div class="cfa-callout__head">
-          <span class="cfa-callout__icon"><i class="fas fa-star" aria-hidden="true"></i></span>
-          <span class="cfa-callout__title">Key Takeaway</span>
+        <div class="cfa-callout cfa-callout--discussion">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-comments" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Discussion</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Open-ended prompt — same palette as the Discussion block in the curriculum menu.</p>
+          </div>
         </div>
-        <div class="cfa-callout__body">
-          <p>Bond prices move <em>inversely</em> with yields. When rates rise, existing bond prices fall.</p>
-        </div>
-      </div>
 
-      <div class="cfa-callout cfa-callout--tip">
-        <div class="cfa-callout__head">
-          <span class="cfa-callout__icon"><i class="far fa-lightbulb" aria-hidden="true"></i></span>
-          <span class="cfa-callout__title">Study Tip</span>
+        <div class="cfa-callout cfa-callout--case-study">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-cogs" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Case study</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Scenario shell — <code>curriculum-case-study-box</code>.</p>
+          </div>
         </div>
-        <div class="cfa-callout__body">
-          <p>Practise the financial calculator shortcut until the keystrokes are automatic.</p>
-        </div>
-      </div>
 
-      <div class="cfa-callout cfa-callout--stop">
-        <div class="cfa-callout__head">
-          <span class="cfa-callout__icon"><i class="fas fa-ban" aria-hidden="true"></i></span>
-          <span class="cfa-callout__title">Critical</span>
+        <div class="cfa-callout cfa-callout--exercise">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-pencil-alt" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Exercise / knowledge check</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Self-assessment, knowledge check, or question set — <code>cfa-curriculum-exercise-box</code>.</p>
+          </div>
         </div>
-        <div class="cfa-callout__body">
-          <p>Always check whether cash flows are at the <em>beginning</em> or <em>end</em> of the period.</p>
+
+        <div class="cfa-callout cfa-callout--los">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-list-ul" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Learning outcomes</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>The candidate should be able to: … — <code>cfa-curriculum-los-box</code>. A plain <code>cfa-callout</code> with no modifier uses the same LOS shell.</p>
+          </div>
+        </div>
+
+        <div class="cfa-callout cfa-callout--reflist">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-clipboard-list" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">Reference list</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>References block — <code>cfa-curriculum-reflist</code>.</p>
+          </div>
+        </div>
+
+        <div class="cfa-callout cfa-callout--overview">
+          <div class="cfa-callout__head">
+            <span class="cfa-callout__icon"><i class="fas fa-list-alt" aria-hidden="true"></i></span>
+            <span class="cfa-callout__title">LM overview / summary</span>
+          </div>
+          <div class="cfa-callout__body">
+            <p>Warm cream shell — <code>cfa-curriculum-overview-box</code> (deprecated tag in production; same look for module wrap-ups).</p>
+          </div>
         </div>
       </div>
     </div>
 
     <details class="snippet">
       <summary>▸ HTML snippet</summary>
-      <pre>&lt;div class="cfa-callout cfa-callout--note"&gt;
+      <pre>&lt;div class="cfa-callout cfa-callout--shaded"&gt;
   &lt;div class="cfa-callout__head"&gt;
     &lt;span class="cfa-callout__icon"&gt;
       &lt;i class="fas fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/span&gt;
-    &lt;span class="cfa-callout__title"&gt;Note&lt;/span&gt;
+    &lt;span class="cfa-callout__title"&gt;Title&lt;/span&gt;
   &lt;/div&gt;
   &lt;div class="cfa-callout__body"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!--
-  Variants + FA5 icons (tinted shell + accent title, not solid bars):
-  --note      fas fa-info-circle
-  --warning   fas fa-exclamation-triangle  (dark text on warm shell)
-  --key       fas fa-star
-  --tip       far fa-lightbulb
-  --stop      fas fa-ban
-
-  Emoji fallback: &lt;span class="cfa-callout__icon"&gt;ℹ&lt;/span&gt;
+&lt;!-- Curriculum modifiers (align with production class names):
+  --shaded --example --discussion --case-study --exercise
+  --los --reflist --overview
+  Optional editorial red shell: --stop (not a curriculum menu item)
+  Legacy: --note → shaded, --key → example, --tip → discussion,
+          --warning → exercise
 --&gt;</pre>
     </details>
   </section>
 
 
   <!-- ============================================================
-    7. LESSON BOX
+    7. ADDITIONAL BOX POSSIBILITIES (brand palette)
     ============================================================ -->
   <section class="section" id="box">
     <div class="section-head">
-      <h2>7 — Lesson Box</h2>
+      <h2>7 — Additional box possibilities</h2>
       <span class="badge">CSS only</span>
     </div>
-    <p class="note">Learner-orientation card in the same soft-shell + centred head style as the feature box. Four variants for different pedagogic purposes.</p>
+    <p class="note">Same shell pattern as callouts, but tints use the <strong>brand palette</strong> (lime, aqua, mauve, cyan) — distinct from curriculum callouts. For new pedagogy tags or repurposed obsolete wrappers outside the production menu.</p>
 
     <div class="demo-area">
       <div class="cfa-box cfa-box--learn">
@@ -602,11 +630,11 @@
 &lt;/div&gt;
 
 &lt;!--
-  Variants + FA5 icons (tinted shells, centred head):
-  --learn       fas fa-book-open     discussion tint
-  --summary     fas fa-check         activity tint
-  --reflection  far fa-comment-dots  exhibit tint
-  --example     fas fa-play          teal tint
+  Variants (palette shells, not curriculum production colours):
+  --learn       fas fa-book-open      lime
+  --summary     fas fa-check          aqua
+  --reflection  far fa-comment-dots   mauve
+  --example     fas fa-play           cyan (lesson example — not cfa-curriculum-example-box)
 
   Emoji fallback: &lt;span class="cfa-box__icon"&gt;📖&lt;/span&gt;
 --&gt;</pre>
@@ -739,141 +767,6 @@
     </details>
   </section>
 
-
-
-  <!-- ============================================================
-    10. FEATURE BOX  (Cidilabs-style centered icon block)
-    ============================================================ -->
-  <section class="section" id="feature-box">
-    <div class="section-head">
-      <h2>10 — Feature Box</h2>
-      <span class="badge">CSS only · Font Awesome</span>
-    </div>
-    <p class="note">
-      Cidilabs-style centered-icon content block. Bigger and more display-prominent
-      than the lesson box. Requires Font Awesome (available in Canvas).
-      Emoji fallback works fine if FA is unavailable.
-    </p>
-
-    <div class="demo-area">
-
-      <p class="sub-label">Discussion — <code>--discussion</code></p>
-      <div class="cfa-feature-box cfa-feature-box--discussion">
-        <div class="cfa-feature-box__head">
-          <span class="cfa-feature-box__icon">
-            <i class="far fa-comments" aria-hidden="true"></i>
-          </span>
-          <span class="cfa-feature-box__title">Discussion</span>
-        </div>
-        <div class="cfa-feature-box__body">
-          <p>Discuss the following: How can ESG principles be integrated into investment strategies?</p>
-        </div>
-      </div>
-
-      <p class="sub-label">Example (with subtitle) — <code>--example</code></p>
-      <div class="cfa-feature-box cfa-feature-box--example">
-        <div class="cfa-feature-box__head">
-          <span class="cfa-feature-box__icon">
-            <i class="fas fa-search" aria-hidden="true"></i>
-          </span>
-          <span class="cfa-feature-box__title">Example 4</span>
-        </div>
-        <div class="cfa-feature-box__body">
-          <span class="cfa-feature-box__subtitle">Discounted Cash Flow Modeling with ESG Factors</span>
-          <p>An investor is evaluating an oil and gas producer. The investor identifies climate change policy risk as a significant sector-wide risk. To incorporate this into a DCF analysis, the investor might:</p>
-          <ol>
-            <li>Reduce revenue projections based on government policies that subsidise renewable energy sources.</li>
-            <li>Increase the discount rate to account for increased sector-wide volatility in future cash flows.</li>
-          </ol>
-        </div>
-      </div>
-
-      <p class="sub-label">Activity — <code>--activity</code></p>
-      <div class="cfa-feature-box cfa-feature-box--activity">
-        <div class="cfa-feature-box__head">
-          <span class="cfa-feature-box__icon">
-            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-          </span>
-          <span class="cfa-feature-box__title">Practice Activity</span>
-        </div>
-        <div class="cfa-feature-box__body">
-          <p>Using the bond calculator above, calculate the price of a 5-year bond with a 6% coupon and $1,000 face value when the discount rate is 7%. Compare to par value and explain the difference.</p>
-        </div>
-      </div>
-
-      <p class="sub-label">Exhibit — <code>--exhibit</code></p>
-      <div class="cfa-feature-box cfa-feature-box--exhibit">
-        <div class="cfa-feature-box__head">
-          <span class="cfa-feature-box__icon">
-            <i class="fas fa-chart-bar" aria-hidden="true"></i>
-          </span>
-          <span class="cfa-feature-box__title">Exhibit 3</span>
-        </div>
-        <div class="cfa-feature-box__body">
-          <span class="cfa-feature-box__subtitle">Base Case Cash Flow Projections (USD thousands)</span>
-          <p>Table or chart content appears here. The exhibit box gives it a consistent visual frame that distinguishes it from body text and workings.</p>
-        </div>
-      </div>
-
-      <p class="sub-label">Key Concept — <code>--concept</code></p>
-      <div class="cfa-feature-box cfa-feature-box--concept">
-        <div class="cfa-feature-box__head">
-          <span class="cfa-feature-box__icon">
-            <i class="far fa-lightbulb" aria-hidden="true"></i>
-          </span>
-          <span class="cfa-feature-box__title">Key Concept</span>
-        </div>
-        <div class="cfa-feature-box__body">
-          <p><strong>Duration</strong> measures a bond's sensitivity to interest rate changes. Longer-duration bonds exhibit greater price volatility for a given change in yield.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <details class="snippet">
-      <summary>▸ HTML snippet</summary>
-      <pre>&lt;!-- Discussion --&gt;
-&lt;div class="cfa-feature-box cfa-feature-box--discussion"&gt;
-  &lt;div class="cfa-feature-box__head"&gt;
-    &lt;span class="cfa-feature-box__icon"&gt;
-      &lt;i class="far fa-comments" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;/span&gt;
-    &lt;span class="cfa-feature-box__title"&gt;Discussion&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div class="cfa-feature-box__body"&gt;
-    &lt;p&gt;Your prompt here.&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Example with optional subtitle --&gt;
-&lt;div class="cfa-feature-box cfa-feature-box--example"&gt;
-  &lt;div class="cfa-feature-box__head"&gt;
-    &lt;span class="cfa-feature-box__icon"&gt;
-      &lt;i class="fas fa-search" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;/span&gt;
-    &lt;span class="cfa-feature-box__title"&gt;Example 4&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div class="cfa-feature-box__body"&gt;
-    &lt;span class="cfa-feature-box__subtitle"&gt;Title of example&lt;/span&gt;
-    &lt;p&gt;Content…&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!--
-  Variants + suggested FA5 icons:
-  --discussion   far fa-comments
-  --example      fas fa-search
-  --activity     fas fa-pencil-alt
-  --exhibit      fas fa-chart-bar
-  --concept      far fa-lightbulb
-
-  No FA? Use an emoji directly:
-  &lt;span class="cfa-feature-box__icon"&gt;💬&lt;/span&gt;
-  &lt;span class="cfa-feature-box__icon"&gt;🔍&lt;/span&gt;
-  &lt;span class="cfa-feature-box__icon"&gt;✏️&lt;/span&gt;
---&gt;</pre>
-    </details>
-  </section>
 
 
 </main>
