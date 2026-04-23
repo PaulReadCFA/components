@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA Component Library</title>
+<link rel="stylesheet" href="cfa-components.css">
+<style>
+  /* ── Demo chrome only — not shipped to Canvas ─────────────── */
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    background: #F7ECDE;
+    color: #000;
+    line-height: 1.6;
+  }
+
+  /* ── Header ──────────────────────────────────────────────── */
+  .site-header {
+    background: #06005A;
+    color: #fff;
+    padding: 2rem 2.5rem 1.75rem;
+  }
+  .site-header h1 {
+    margin: 0 0 0.2em;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  .site-header p { margin: 0; opacity: .6; font-size: 0.85rem; }
+
+  /* ── Nav ─────────────────────────────────────────────────── */
+  .site-nav {
+    background: #0a0060;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .site-nav a {
+    color: rgba(255,255,255,.6);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+    display: block;
+  }
+  .site-nav a:hover { color: #fff; border-bottom-color: #326AFF; }
+
+  /* ── Body ────────────────────────────────────────────────── */
+  .page { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+
+  h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.25rem;
+    color: #06005A;
+    margin: 2rem 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid #06005A;
+  }
+  h3 { font-size: 0.95rem; margin: 1.5rem 0 0.4rem; color: #06005A; }
+
+  p, li { font-size: 0.9rem; }
+
+  /* ── Demo links ──────────────────────────────────────────── */
+  .demo-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+  }
+  .demo-link {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1.5px solid #E9E9E9;
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    flex: 1;
+    min-width: 200px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .demo-link:hover {
+    border-color: #326AFF;
+    box-shadow: 0 3px 12px rgba(50,106,255,.15);
+  }
+  .demo-link__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #646464;
+    margin-bottom: 0.3em;
+  }
+  .demo-link__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #06005A;
+    margin-bottom: 0.25em;
+  }
+  .demo-link__desc { font-size: 0.82rem; color: #646464; }
+
+  /* ── Reference table ─────────────────────────────────────── */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+    margin: 0.75rem 0 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #E9E9E9;
+  }
+  .ref-table thead { background: #06005A; color: #fff; }
+  .ref-table th    { padding: 0.5em 0.85em; text-align: left; font-weight: 600; font-size: 0.8em; letter-spacing: .04em; }
+  .ref-table td    { padding: 0.45em 0.85em; border-top: 1px solid #E9E9E9; vertical-align: top; }
+  .ref-table tr:nth-child(even) td { background: #fafafa; }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82em;
+    background: #f0eeff;
+    color: #06005A;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  /* ── Deployment box ──────────────────────────────────────── */
+  .deploy-box {
+    background: #fff;
+    border: 1.5px solid #E9E9E9;
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+  }
+  .deploy-box h3 { margin: 0 0 0.5em; font-size: 0.88rem; }
+  .deploy-box ul { margin: 0.4em 0 0; padding-left: 1.2em; }
+  .deploy-box li { margin-bottom: 0.3em; }
+  .tag { color: #07514F; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>CFA Canvas Component Library</h1>
+  <p>v2.1 · Plain HTML / CSS / JS · No Cidilabs dependency</p>
+</header>
+
+<nav class="site-nav">
+  <a href="demo-library.html">Component Library</a>
+  <a href="demo-exploration.html">Exploration Questions</a>
+  <a href="#reference">Quick Reference</a>
+  <a href="#deploy">Deployment</a>
+</nav>
+
+<main class="page">
+
+  <h2>Demo pages</h2>
+  <div class="demo-links">
+    <a class="demo-link" href="demo-library.html">
+      <span class="demo-link__label">Demo</span>
+      <span class="demo-link__title">Component Library</span>
+      <span class="demo-link__desc">All 11 component types with live examples and HTML snippets</span>
+    </a>
+    <a class="demo-link" href="demo-exploration.html">
+      <span class="demo-link__label">Demo</span>
+      <span class="demo-link__title">Exploration Questions</span>
+      <span class="demo-link__desc">Tabs + Check Answer composite — for calculator pages</span>
+    </a>
+  </div>
+
+
+  <h2 id="reference">Quick reference</h2>
+  <p>All components live in <code>cfa-components.css</code>. The modifier pattern is <code>.cfa-[component]--[variant]</code>.</p>
+
+  <h3>Interactive components (require JS)</h3>
+  <table class="ref-table">
+    <thead>
+      <tr><th>Component</th><th>Base class</th><th>Variants / modifiers</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Expandable box</td>
+        <td><code>.cfa-expand</code></td>
+        <td>—</td>
+        <td>Add <code>data-open</code> + <code>aria-expanded="true"</code> to pre-open</td>
+      </tr>
+      <tr>
+        <td>Accordion</td>
+        <td><code>.cfa-accordion</code></td>
+        <td>—</td>
+        <td>Controls use <code>data-cfa-open-all</code> / <code>data-cfa-close-all</code></td>
+      </tr>
+      <tr>
+        <td>Horizontal tabs</td>
+        <td><code>.cfa-tabs</code></td>
+        <td>—</td>
+        <td>Keyboard: ← → Home End · first panel needs <code>data-active</code></td>
+      </tr>
+      <tr>
+        <td>Exploration questions</td>
+        <td><code>.cfa-exploration</code></td>
+        <td>—</td>
+        <td>Composed of <code>.cfa-tabs</code> + <code>.cfa-expand</code> — no extra JS</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Static components (CSS only)</h3>
+  <table class="ref-table">
+    <thead>
+      <tr><th>Component</th><th>Base class</th><th>Variants</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Equation box</td>
+        <td><code>.cfa-equation</code></td>
+        <td><code>--centered</code></td>
+      </tr>
+      <tr>
+        <td>Custom list</td>
+        <td><code>.cfa-list</code></td>
+        <td><code>--check</code> <code>--cross</code> <code>--arrow</code> <code>--dash</code> <code>--diamond</code> <code>--numcircle</code> <code>--checkbox</code> <code>--checkbox-done</code> <code>--tasklist</code></td>
+      </tr>
+      <tr>
+        <td>Callout box</td>
+        <td><code>.cfa-callout</code></td>
+        <td><code>--note</code> <code>--warning</code> <code>--key</code> <code>--tip</code> <code>--stop</code></td>
+      </tr>
+      <tr>
+        <td>Lesson box</td>
+        <td><code>.cfa-box</code></td>
+        <td><code>--learn</code> <code>--summary</code> <code>--reflection</code> <code>--example</code></td>
+      </tr>
+      <tr>
+        <td>Comparison anchor</td>
+        <td><code>.cfa-compare</code></td>
+        <td>Card head: <code>--blue</code> <code>--bright</code> <code>--purple</code> <code>--pine</code> <code>--orange</code></td>
+      </tr>
+      <tr>
+        <td>Quote box</td>
+        <td><code>.cfa-quote</code></td>
+        <td><code>--standard</code> <code>--pullquote</code></td>
+      </tr>
+      <tr>
+        <td>Feature box</td>
+        <td><code>.cfa-feature-box</code></td>
+        <td><code>--discussion</code> <code>--example</code> <code>--activity</code> <code>--exhibit</code> <code>--concept</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Design tokens (CSS custom properties)</h3>
+  <table class="ref-table">
+    <thead>
+      <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--cfa-dark-blue</code></td>   <td>#06005A</td><td>Headers, triggers, primary text</td></tr>
+      <tr><td><code>--cfa-bright-blue</code></td>  <td>#326AFF</td><td>Active states, borders, labels</td></tr>
+      <tr><td><code>--cfa-warm-white</code></td>   <td>#F7ECDE</td><td>Panel backgrounds</td></tr>
+      <tr><td><code>--cfa-purple</code></td>        <td>#7A46FF</td><td>Reflection, diamond list, tip</td></tr>
+      <tr><td><code>--cfa-cyan</code></td>          <td>#00BBFF</td><td>Focus rings only</td></tr>
+      <tr><td><code>--cfa-pine</code></td>          <td>#07514F</td><td>Check answer, key takeaway, check list</td></tr>
+      <tr><td><code>--cfa-orange</code></td>        <td>#FF8861</td><td>Warning, cross list</td></tr>
+      <tr><td><code>--cfa-grey-light</code></td>    <td>#E9E9E9</td><td>Borders, tab track</td></tr>
+      <tr><td><code>--cfa-grey-dark</code></td>     <td>#646464</td><td>Muted text, empty checkboxes</td></tr>
+    </tbody>
+  </table>
+
+
+  <h2 id="deploy">Canvas deployment</h2>
+
+  <div class="deploy-box">
+    <h3>📋 CSS → Admin › Themes › Custom CSS</h3>
+    <p>Copy the entire contents of <code>cfa-components.css</code> and paste into the Custom CSS field in your Canvas theme.</p>
+  </div>
+
+  <div class="deploy-box">
+    <h3>📋 JS → Admin › Themes › Custom JavaScript</h3>
+    <p>Copy the entire contents of <code>cfa-components.js</code> and paste into the Custom JavaScript field.</p>
+  </div>
+
+  <div class="deploy-box">
+    <h3>📄 HTML → Canvas page editor</h3>
+    <ul>
+      <li>Switch to the HTML source view in the RCE editor</li>
+      <li>Paste the relevant HTML snippet from the demo pages</li>
+      <li>For pages with multiple <code>.cfa-exploration</code> blocks, ensure tab/panel IDs are unique — use a different prefix per block (e.g. <code>eq2-tab-1</code> / <code>eq2-panel-1</code>)</li>
+      <li>Canvas may strip some attributes — test after saving. The components use only <code>class</code>, <code>id</code>, <code>aria-*</code>, <code>role</code>, <code>data-*</code>, and <code>tabindex</code>, all of which Canvas allows</li>
+    </ul>
+  </div>
+
+</main>
+</body>
+</html>

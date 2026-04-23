@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA Component Library — Demo</title>
+<link rel="stylesheet" href="cfa-components.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+  /* ── Demo chrome only — not shipped to Canvas ─────────────── */
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    background: #F7ECDE;
+    color: #000;
+    line-height: 1.6;
+  }
+
+  .site-header {
+    background: #06005A;
+    color: #fff;
+    padding: 1.75rem 2.5rem 1.5rem;
+    position: sticky; top: 0; z-index: 50;
+    box-shadow: 0 2px 12px rgba(6,0,90,.3);
+  }
+  .site-header h1 {
+    margin: 0 0 0.15em;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.4rem; font-weight: 600;
+  }
+  .site-header p { margin: 0; opacity: .6; font-size: 0.82rem; }
+
+  .site-nav {
+    background: #0a0060;
+    padding: 0 2rem;
+    display: flex; gap: 0; flex-wrap: wrap;
+  }
+  .site-nav a {
+    color: rgba(255,255,255,.6);
+    text-decoration: none;
+    font-size: 0.77rem; font-weight: 600;
+    letter-spacing: .04em; text-transform: uppercase;
+    padding: 0.45rem 0.85rem;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+    display: block;
+  }
+  .site-nav a:hover { color: #fff; border-bottom-color: #326AFF; }
+
+  .page { max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+
+  .section { margin-bottom: 3.5rem; scroll-margin-top: 88px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 0.75em;
+    border-bottom: 2px solid #06005A;
+    padding-bottom: 0.45rem; margin-bottom: 1.1rem;
+  }
+  .section-head h2 {
+    margin: 0;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.2rem; font-weight: 600; color: #06005A;
+  }
+  .badge {
+    font-size: 0.67rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; background: #06005A; color: #fff;
+    border-radius: 3px; padding: 0.2em 0.55em;
+  }
+  .note {
+    font-size: 0.85rem; color: #646464; margin: 0 0 1rem;
+  }
+  .demo-area {
+    background: #fff; border: 1px solid #E9E9E9;
+    border-radius: 8px; padding: 1.5rem; margin-bottom: 0.75rem;
+  }
+  .sub-label {
+    font-size: 0.69rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: #646464; margin: 1.25rem 0 0.5rem;
+  }
+  .sub-label:first-child { margin-top: 0; }
+
+  details.snippet summary {
+    font-size: 0.77rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: #646464; cursor: pointer;
+    padding: 0.35rem 0; user-select: none;
+  }
+  details.snippet summary:hover { color: #06005A; }
+  details.snippet pre {
+    background: #06005A; color: #c9d1e0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.77rem; line-height: 1.65;
+    padding: 1.1rem 1.4rem; border-radius: 6px;
+    overflow-x: auto; margin: 0.4rem 0 0;
+    tab-size: 2; white-space: pre;
+  }
+  .list-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 2rem;
+  }
+  @media (max-width: 560px) { .list-grid { grid-template-columns: 1fr; } }
+
+  /* MathJax stand-in for demo */
+  .mjx { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 1.05em; }
+  sub, sup { font-size: 0.72em; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>CFA Canvas Component Library</h1>
+  <p>All components · v2.1 · <a href="index.html" style="color:rgba(255,255,255,.55);font-size:.85em">← Index</a></p>
+</header>
+<nav class="site-nav">
+  <a href="#expand">Expandable</a>
+  <a href="#accordion">Accordion</a>
+  <a href="#tabs">Tabs</a>
+  <a href="#equation">Equation</a>
+  <a href="#lists">Lists</a>
+  <a href="#callout">Callout</a>
+  <a href="#box">Lesson box</a>
+  <a href="#compare">Compare</a>
+  <a href="#quote">Quote</a>
+  <a href="#feature-box">Feature box</a>
+</nav>
+
+<main class="page">
+
+
+  <!-- ============================================================
+    1. EXPANDABLE BOX
+    ============================================================ -->
+  <section class="section" id="expand">
+    <div class="section-head">
+      <h2>1 — Expandable Box</h2>
+      <span class="badge">Needs JS</span>
+    </div>
+    <p class="note">Dark blue header = closed. Bright blue = open. Add <code>data-open</code> to pre-expand.</p>
+
+    <div class="demo-area">
+      <div class="cfa-expand">
+        <button class="cfa-expand__trigger" type="button" aria-expanded="false"
+                aria-controls="demo-expand-tvm">
+          <span class="cfa-expand__icon" aria-hidden="true"></span>
+          What is the time value of money?
+        </button>
+        <div class="cfa-expand__body" id="demo-expand-tvm">
+          <p>The time value of money (TVM) is the concept that money available today is worth more than the same amount in the future due to its potential earning capacity.</p>
+        </div>
+      </div>
+
+      <div class="cfa-expand" data-open>
+        <button class="cfa-expand__trigger" type="button" aria-expanded="true"
+                aria-controls="demo-expand-preopen">
+          <span class="cfa-expand__icon" aria-hidden="true"></span>
+          Pre-expanded example (data-open)
+        </button>
+        <div class="cfa-expand__body" id="demo-expand-preopen">
+          <p>Add <code>data-open</code> to the <code>.cfa-expand</code> element and <code>aria-expanded="true"</code> to the button to start open.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;div class="cfa-expand"&gt;
+  &lt;button type="button" class="cfa-expand__trigger" aria-expanded="false"
+          aria-controls="panel-example"&gt;
+    &lt;span class="cfa-expand__icon" aria-hidden="true"&gt;&lt;/span&gt;
+    Your title here
+  &lt;/button&gt;
+  &lt;div class="cfa-expand__body" id="panel-example"&gt;
+    &lt;p&gt;Hidden content.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Pre-open: add data-open + aria-expanded="true" --&gt;
+&lt;div class="cfa-expand" data-open&gt;
+  &lt;button type="button" class="cfa-expand__trigger" aria-expanded="true"
+          aria-controls="panel-open"&gt;
+    &lt;span class="cfa-expand__icon" aria-hidden="true"&gt;&lt;/span&gt;
+    Open by default
+  &lt;/button&gt;
+  &lt;div class="cfa-expand__body" id="panel-open"&gt;&lt;p&gt;Visible from load.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- If you omit id / aria-controls, cfa-components.js assigns them on init. --&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    2. ACCORDION
+    ============================================================ -->
+  <section class="section" id="accordion">
+    <div class="section-head">
+      <h2>2 — Accordion</h2>
+      <span class="badge">Needs JS</span>
+    </div>
+    <p class="note">Wrap <code>.cfa-expand</code> items in <code>.cfa-accordion</code>. Open/Collapse all controls sit outside in <code>.cfa-accordion__controls</code>.</p>
+
+    <div class="demo-area">
+      <div class="cfa-accordion__controls">
+        <button type="button" class="cfa-accordion__ctrl-btn" data-cfa-open-all>Open all</button>
+        <button type="button" class="cfa-accordion__ctrl-btn" data-cfa-close-all>Collapse all</button>
+      </div>
+      <div class="cfa-accordion">
+        <div class="cfa-expand">
+          <button class="cfa-expand__trigger" type="button" aria-expanded="false"
+                  aria-controls="acc-demo-lo1">
+            <span class="cfa-expand__icon" aria-hidden="true"></span>
+            Learning Outcome 1 — Describe TVM concepts
+          </button>
+          <div class="cfa-expand__body" id="acc-demo-lo1">
+            <p>The TVM framework links present and future cash flows through discount rates. Key variables: PV, FV, <em>r</em>, and <em>n</em>.</p>
+          </div>
+        </div>
+        <div class="cfa-expand">
+          <button class="cfa-expand__trigger" type="button" aria-expanded="false"
+                  aria-controls="acc-demo-lo2">
+            <span class="cfa-expand__icon" aria-hidden="true"></span>
+            Learning Outcome 2 — Calculate present and future values
+          </button>
+          <div class="cfa-expand__body" id="acc-demo-lo2">
+            <p>FV = PV × (1 + r)<sup>n</sup>. For multiple cash flows, each is discounted to a common date and summed.</p>
+          </div>
+        </div>
+        <div class="cfa-expand">
+          <button class="cfa-expand__trigger" type="button" aria-expanded="false"
+                  aria-controls="acc-demo-lo3">
+            <span class="cfa-expand__icon" aria-hidden="true"></span>
+            Learning Outcome 3 — Explain annuities and perpetuities
+          </button>
+          <div class="cfa-expand__body" id="acc-demo-lo3">
+            <p>An annuity is a series of equal cash flows. A perpetuity is infinite: PV = C / r.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;div class="cfa-accordion__controls"&gt;
+  &lt;button type="button" class="cfa-accordion__ctrl-btn" data-cfa-open-all&gt;Open all&lt;/button&gt;
+  &lt;button type="button" class="cfa-accordion__ctrl-btn" data-cfa-close-all&gt;Collapse all&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="cfa-accordion"&gt;
+  &lt;div class="cfa-expand"&gt;
+    &lt;button type="button" class="cfa-expand__trigger" aria-expanded="false"
+            aria-controls="acc-item-1"&gt;
+      &lt;span class="cfa-expand__icon" aria-hidden="true"&gt;&lt;/span&gt;
+      Item title
+    &lt;/button&gt;
+    &lt;div class="cfa-expand__body" id="acc-item-1"&gt;&lt;p&gt;Content.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- repeat .cfa-expand as needed --&gt;
+&lt;/div&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    3. TABS
+    ============================================================ -->
+  <section class="section" id="tabs">
+    <div class="section-head">
+      <h2>3 — Horizontal Tabs</h2>
+      <span class="badge">Needs JS</span>
+    </div>
+    <p class="note">Tabs are proper buttons on a grey track. Active = dark blue fill. Keyboard: ← → Home End.</p>
+
+    <div class="demo-area">
+      <div class="cfa-tabs">
+        <div class="cfa-tabs__list" role="tablist" aria-label="Bond valuation topics">
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="true"  aria-controls="tb-p1" id="tb-t1">Overview</button>
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="false" aria-controls="tb-p2" id="tb-t2">Formula</button>
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="false" aria-controls="tb-p3" id="tb-t3">Example</button>
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="false" aria-controls="tb-p4" id="tb-t4">Practice</button>
+        </div>
+        <div class="cfa-tabs__panel" role="tabpanel" id="tb-p1" aria-labelledby="tb-t1" data-active>
+          <p><strong>Bond valuation</strong> is the process of determining the fair price of a bond — the present value of all expected cash flows.</p>
+        </div>
+        <div class="cfa-tabs__panel" role="tabpanel" id="tb-p2" aria-labelledby="tb-t2">
+          <p class="mjx">P = C/(1+r) + C/(1+r)² + … + (C+F)/(1+r)<sup>n</sup></p>
+          <p>Where <em>C</em> = coupon, <em>F</em> = face value, <em>r</em> = discount rate, <em>n</em> = periods.</p>
+        </div>
+        <div class="cfa-tabs__panel" role="tabpanel" id="tb-p3" aria-labelledby="tb-t3">
+          <p>3-year bond · 5% coupon · $1,000 face · 4% discount rate → P = <strong>$1,027.75</strong></p>
+        </div>
+        <div class="cfa-tabs__panel" role="tabpanel" id="tb-p4" aria-labelledby="tb-t4">
+          <p>Try: 5-year, 6% coupon bond at a 7% discount rate. <em>Answer: $958.99</em></p>
+        </div>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;div class="cfa-tabs"&gt;
+  &lt;div class="cfa-tabs__list" role="tablist" aria-label="Your label"&gt;
+    &lt;button type="button" class="cfa-tabs__tab" role="tab"
+            aria-selected="true"  aria-controls="p1" id="t1"&gt;Tab 1&lt;/button&gt;
+    &lt;button type="button" class="cfa-tabs__tab" role="tab"
+            aria-selected="false" aria-controls="p2" id="t2"&gt;Tab 2&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;!-- First panel gets data-active --&gt;
+  &lt;div class="cfa-tabs__panel" role="tabpanel" id="p1"
+       aria-labelledby="t1" data-active&gt;Panel 1.&lt;/div&gt;
+  &lt;div class="cfa-tabs__panel" role="tabpanel" id="p2"
+       aria-labelledby="t2"&gt;Panel 2.&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    4. EQUATION BOX
+    ============================================================ -->
+  <section class="section" id="equation">
+    <div class="section-head">
+      <h2>4 — Equation Box</h2>
+      <span class="badge">CSS only</span>
+    </div>
+
+    <div class="demo-area">
+      <p class="sub-label">Left-ruled (default)</p>
+      <div class="cfa-equation">
+        <span class="cfa-equation__label">Bond Pricing</span>
+        <span class="cfa-equation__num">Eq. 1</span>
+        <span class="mjx">P = Σ C<sub>t</sub> / (1 + r)<sup>t</sup> + F / (1 + r)<sup>n</sup></span>
+      </div>
+
+      <p class="sub-label">Centred — <code>cfa-equation--centered</code></p>
+      <div class="cfa-equation cfa-equation--centered">
+        <span class="cfa-equation__label">Dividend Discount Model</span>
+        <span class="mjx">P₀ = D₁ / (k<sub>e</sub> − g)</span>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;!-- Left-ruled --&gt;
+&lt;div class="cfa-equation"&gt;
+  &lt;span class="cfa-equation__label"&gt;Bond Pricing&lt;/span&gt;
+  &lt;span class="cfa-equation__num"&gt;Eq. 1&lt;/span&gt;
+  \[ P = \sum_{t=1}^{n} \frac{C_t}{(1+r)^t} + \frac{F}{(1+r)^n} \]
+&lt;/div&gt;
+
+&lt;!-- Centred --&gt;
+&lt;div class="cfa-equation cfa-equation--centered"&gt;
+  &lt;span class="cfa-equation__label"&gt;Dividend Discount Model&lt;/span&gt;
+  \[ P_0 = \frac{D_1}{k_e - g} \]
+&lt;/div&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    5. CUSTOM LISTS
+    ============================================================ -->
+  <section class="section" id="lists">
+    <div class="section-head">
+      <h2>5 — Custom Lists</h2>
+      <span class="badge">CSS only</span>
+    </div>
+
+    <div class="demo-area">
+      <div class="list-grid">
+        <div>
+          <p class="sub-label">Check <code>--check</code></p>
+          <ul class="cfa-list cfa-list--check">
+            <li>Equity securities</li><li>Fixed income</li><li>Derivatives</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Cross <code>--cross</code></p>
+          <ul class="cfa-list cfa-list--cross">
+            <li>Systemic risk</li><li>Credit risk</li><li>Liquidity risk</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Arrow <code>--arrow</code></p>
+          <ul class="cfa-list cfa-list--arrow">
+            <li>Identify the opportunity</li><li>Assess the risk</li><li>Execute the trade</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Dash <code>--dash</code></p>
+          <ul class="cfa-list cfa-list--dash">
+            <li>Market efficiency</li><li>Portfolio theory</li><li>Factor models</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Diamond <code>--diamond</code></p>
+          <ul class="cfa-list cfa-list--diamond">
+            <li>Return on equity</li><li>Price-to-earnings</li><li>Enterprise value</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Numbered circles <code>--numcircle</code></p>
+          <ul class="cfa-list cfa-list--numcircle">
+            <li>Define the objective</li><li>Gather the data</li><li>Analyse</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Checkbox unchecked <code>--checkbox</code></p>
+          <ul class="cfa-list cfa-list--checkbox">
+            <li>Read the assigned text</li><li>Complete practice problems</li><li>Review flashcards</li>
+          </ul>
+        </div>
+        <div>
+          <p class="sub-label">Checkbox done <code>--checkbox-done</code></p>
+          <ul class="cfa-list cfa-list--checkbox-done">
+            <li>Read the assigned text</li><li>Complete practice problems</li><li>Review flashcards</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="sub-label">Task list <code>--tasklist</code> — add <code>class="checked"</code> to individual items</p>
+      <ul class="cfa-list cfa-list--tasklist">
+        <li class="checked">Watch the introductory video</li>
+        <li class="checked">Read Chapter 1</li>
+        <li>Work through the bond calculator</li>
+        <li>Complete the self-assessment quiz</li>
+        <li>Post in the discussion forum</li>
+      </ul>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;ul class="cfa-list cfa-list--check"&gt;
+  &lt;li&gt;Item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Mixed task list --&gt;
+&lt;ul class="cfa-list cfa-list--tasklist"&gt;
+  &lt;li class="checked"&gt;Done&lt;/li&gt;
+  &lt;li&gt;To do&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!--
+  Modifiers:
+  --check  --cross  --arrow  --dash  --diamond
+  --numcircle  --checkbox  --checkbox-done  --tasklist
+--&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    6. CALLOUT BOXES
+    ============================================================ -->
+  <section class="section" id="callout">
+    <div class="section-head">
+      <h2>6 — Callout Boxes</h2>
+      <span class="badge">CSS only · Font Awesome</span>
+    </div>
+    <p class="note">Soft tinted card with centred icon and title (same DesignPLUS-style family as the feature box). Font Awesome icons recommended; emoji fallback works fine.</p>
+
+    <div class="demo-area">
+      <div class="cfa-callout cfa-callout--note">
+        <div class="cfa-callout__head">
+          <span class="cfa-callout__icon"><i class="fas fa-info-circle" aria-hidden="true"></i></span>
+          <span class="cfa-callout__title">Note</span>
+        </div>
+        <div class="cfa-callout__body">
+          <p>This reading assumes basic familiarity with DCF analysis. Review Reading 7 if needed.</p>
+        </div>
+      </div>
+
+      <div class="cfa-callout cfa-callout--warning">
+        <div class="cfa-callout__head">
+          <span class="cfa-callout__icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></span>
+          <span class="cfa-callout__title">Exam Warning</span>
+        </div>
+        <div class="cfa-callout__body">
+          <p>Confusing nominal and effective annual rates is a common source of errors in the exam.</p>
+        </div>
+      </div>
+
+      <div class="cfa-callout cfa-callout--key">
+        <div class="cfa-callout__head">
+          <span class="cfa-callout__icon"><i class="fas fa-star" aria-hidden="true"></i></span>
+          <span class="cfa-callout__title">Key Takeaway</span>
+        </div>
+        <div class="cfa-callout__body">
+          <p>Bond prices move <em>inversely</em> with yields. When rates rise, existing bond prices fall.</p>
+        </div>
+      </div>
+
+      <div class="cfa-callout cfa-callout--tip">
+        <div class="cfa-callout__head">
+          <span class="cfa-callout__icon"><i class="far fa-lightbulb" aria-hidden="true"></i></span>
+          <span class="cfa-callout__title">Study Tip</span>
+        </div>
+        <div class="cfa-callout__body">
+          <p>Practise the financial calculator shortcut until the keystrokes are automatic.</p>
+        </div>
+      </div>
+
+      <div class="cfa-callout cfa-callout--stop">
+        <div class="cfa-callout__head">
+          <span class="cfa-callout__icon"><i class="fas fa-ban" aria-hidden="true"></i></span>
+          <span class="cfa-callout__title">Critical</span>
+        </div>
+        <div class="cfa-callout__body">
+          <p>Always check whether cash flows are at the <em>beginning</em> or <em>end</em> of the period.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;div class="cfa-callout cfa-callout--note"&gt;
+  &lt;div class="cfa-callout__head"&gt;
+    &lt;span class="cfa-callout__icon"&gt;
+      &lt;i class="fas fa-info-circle" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;span class="cfa-callout__title"&gt;Note&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="cfa-callout__body"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!--
+  Variants + FA5 icons (tinted shell + accent title, not solid bars):
+  --note      fas fa-info-circle
+  --warning   fas fa-exclamation-triangle  (dark text on warm shell)
+  --key       fas fa-star
+  --tip       far fa-lightbulb
+  --stop      fas fa-ban
+
+  Emoji fallback: &lt;span class="cfa-callout__icon"&gt;ℹ&lt;/span&gt;
+--&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    7. LESSON BOX
+    ============================================================ -->
+  <section class="section" id="box">
+    <div class="section-head">
+      <h2>7 — Lesson Box</h2>
+      <span class="badge">CSS only</span>
+    </div>
+    <p class="note">Learner-orientation card in the same soft-shell + centred head style as the feature box. Four variants for different pedagogic purposes.</p>
+
+    <div class="demo-area">
+      <div class="cfa-box cfa-box--learn">
+        <div class="cfa-box__head">
+          <span class="cfa-box__icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
+          <span class="cfa-box__title">What You Will Learn</span>
+        </div>
+        <div class="cfa-box__body">
+          <p>In this lesson, you will examine the <strong>assumptions of simple linear regression</strong> and learn how violations appear in <strong>residual plots</strong>. You will explore <strong>goodness-of-fit</strong> measures such as <strong>R²</strong>, the <strong>F-statistic</strong>, and the <strong>standard error of the estimate</strong>.</p>
+        </div>
+      </div>
+
+      <div class="cfa-box cfa-box--summary">
+        <div class="cfa-box__head">
+          <span class="cfa-box__icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+          <span class="cfa-box__title">Lesson Summary</span>
+        </div>
+        <div class="cfa-box__body">
+          <p>In this lesson you examined how bond prices are determined by discounting future cash flows. You calculated prices for coupon bonds and zero-coupon bonds, and explored how changes in discount rates affect value.</p>
+        </div>
+      </div>
+
+      <div class="cfa-box cfa-box--reflection">
+        <div class="cfa-box__head">
+          <span class="cfa-box__icon"><i class="far fa-comment-dots" aria-hidden="true"></i></span>
+          <span class="cfa-box__title">Reflection</span>
+        </div>
+        <div class="cfa-box__body">
+          <p>Before continuing, consider: if two bonds have identical coupons and face values but different maturities, how would you expect their prices to differ when interest rates change?</p>
+        </div>
+      </div>
+
+      <div class="cfa-box cfa-box--example">
+        <div class="cfa-box__head">
+          <span class="cfa-box__icon"><i class="fas fa-play" aria-hidden="true"></i></span>
+          <span class="cfa-box__title">Worked Example</span>
+        </div>
+        <div class="cfa-box__body">
+          <p>A 3-year bond has a face value of $1,000 and pays an annual coupon of 5%. The market discount rate is 4%. Calculate the fair value of this bond.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;div class="cfa-box cfa-box--learn"&gt;
+  &lt;div class="cfa-box__head"&gt;
+    &lt;span class="cfa-box__icon"&gt;
+      &lt;i class="fas fa-book-open" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;span class="cfa-box__title"&gt;What You Will Learn&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="cfa-box__body"&gt;&lt;p&gt;In this lesson…&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!--
+  Variants + FA5 icons (tinted shells, centred head):
+  --learn       fas fa-book-open     discussion tint
+  --summary     fas fa-check         activity tint
+  --reflection  far fa-comment-dots  exhibit tint
+  --example     fas fa-play          teal tint
+
+  Emoji fallback: &lt;span class="cfa-box__icon"&gt;📖&lt;/span&gt;
+--&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    8. COMPARISON ANCHOR
+    ============================================================ -->
+  <section class="section" id="compare">
+    <div class="section-head">
+      <h2>8 — Comparison Anchor</h2>
+      <span class="badge">CSS only</span>
+    </div>
+    <p class="note">Side-by-side concept cards to prevent conflation of related terms. Stacks on mobile.</p>
+
+    <div class="demo-area">
+      <p class="sub-label">Default (dark blue headers)</p>
+      <div class="cfa-compare">
+        <div class="cfa-compare__grid">
+          <div class="cfa-compare__card">
+            <div class="cfa-compare__card-head">Linearity</div>
+            <div class="cfa-compare__card-body">
+              <p><strong>Linearity</strong> concerns whether the relationship between X and Y follows a straight-line functional form.</p>
+            </div>
+          </div>
+          <div class="cfa-compare__card">
+            <div class="cfa-compare__card-head">Homoskedasticity</div>
+            <div class="cfa-compare__card-body">
+              <p><strong>Homoskedasticity</strong> concerns whether the variance of residuals is constant across all observations.</p>
+            </div>
+          </div>
+        </div>
+        <p class="cfa-compare__note">A model may satisfy one assumption while violating the other.</p>
+      </div>
+
+      <p class="sub-label">Mixed header colours</p>
+      <div class="cfa-compare">
+        <p class="cfa-compare__label">Compare</p>
+        <div class="cfa-compare__grid">
+          <div class="cfa-compare__card cfa-compare__card--pine">
+            <div class="cfa-compare__card-head">Ordinary Annuity</div>
+            <div class="cfa-compare__card-body">
+              <p>Cash flows occur at the <strong>end</strong> of each period. Most loans and bonds follow this pattern.</p>
+            </div>
+          </div>
+          <div class="cfa-compare__card cfa-compare__card--purple">
+            <div class="cfa-compare__card-head">Annuity Due</div>
+            <div class="cfa-compare__card-body">
+              <p>Cash flows occur at the <strong>beginning</strong> of each period. Leases are a common example.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;div class="cfa-compare"&gt;
+  &lt;p class="cfa-compare__label"&gt;Compare&lt;/p&gt;  &lt;!-- optional --&gt;
+  &lt;div class="cfa-compare__grid"&gt;
+    &lt;div class="cfa-compare__card"&gt;
+      &lt;div class="cfa-compare__card-head"&gt;Concept A&lt;/div&gt;
+      &lt;div class="cfa-compare__card-body"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="cfa-compare__card"&gt;
+      &lt;div class="cfa-compare__card-head"&gt;Concept B&lt;/div&gt;
+      &lt;div class="cfa-compare__card-body"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;p class="cfa-compare__note"&gt;Optional note below.&lt;/p&gt;  &lt;!-- optional --&gt;
+&lt;/div&gt;
+
+&lt;!--
+  Card head colour modifiers (on .cfa-compare__card):
+  --blue (default)  --bright  --purple  --pine  --orange
+--&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    9. QUOTE BOX
+    ============================================================ -->
+  <section class="section" id="quote">
+    <div class="section-head">
+      <h2>9 — Quote Box</h2>
+      <span class="badge">CSS only</span>
+    </div>
+    <p class="note">For ethics standards, verbatim testable text, and pull quotes. No icon stripe — prominence from border and weight.</p>
+
+    <div class="demo-area">
+      <p class="sub-label">Default</p>
+      <div class="cfa-quote">
+        <span class="cfa-quote__title">Important Quote</span>
+        <div class="cfa-quote__body">"The duty of loyalty, prudence, and care requires that members place their clients' interests above their own."</div>
+      </div>
+
+      <p class="sub-label">Standard — <code>cfa-quote--standard</code> (for ethics text)</p>
+      <div class="cfa-quote cfa-quote--standard">
+        <span class="cfa-quote__title">Standard I(C): Misrepresentation</span>
+        <div class="cfa-quote__body">Members and Candidates must not knowingly make any misrepresentations relating to investment analysis, recommendations, actions, or other professional activities.</div>
+      </div>
+
+      <p class="sub-label">Pull quote — <code>cfa-quote--pullquote</code></p>
+      <div class="cfa-quote cfa-quote--pullquote">
+        "Price is what you pay. Value is what you get."
+      </div>
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;!-- Default --&gt;
+&lt;div class="cfa-quote"&gt;
+  &lt;span class="cfa-quote__title"&gt;Important Quote&lt;/span&gt;
+  &lt;div class="cfa-quote__body"&gt;"…"&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Ethics standard --&gt;
+&lt;div class="cfa-quote cfa-quote--standard"&gt;
+  &lt;span class="cfa-quote__title"&gt;Standard I(C): Misrepresentation&lt;/span&gt;
+  &lt;div class="cfa-quote__body"&gt;Members and Candidates must not…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Pull quote (no title needed) --&gt;
+&lt;div class="cfa-quote cfa-quote--pullquote"&gt;
+  "Price is what you pay. Value is what you get."
+&lt;/div&gt;</pre>
+    </details>
+  </section>
+
+
+
+  <!-- ============================================================
+    10. FEATURE BOX  (Cidilabs-style centered icon block)
+    ============================================================ -->
+  <section class="section" id="feature-box">
+    <div class="section-head">
+      <h2>10 — Feature Box</h2>
+      <span class="badge">CSS only · Font Awesome</span>
+    </div>
+    <p class="note">
+      Cidilabs-style centered-icon content block. Bigger and more display-prominent
+      than the lesson box. Requires Font Awesome (available in Canvas).
+      Emoji fallback works fine if FA is unavailable.
+    </p>
+
+    <div class="demo-area">
+
+      <p class="sub-label">Discussion — <code>--discussion</code></p>
+      <div class="cfa-feature-box cfa-feature-box--discussion">
+        <div class="cfa-feature-box__head">
+          <span class="cfa-feature-box__icon">
+            <i class="far fa-comments" aria-hidden="true"></i>
+          </span>
+          <span class="cfa-feature-box__title">Discussion</span>
+        </div>
+        <div class="cfa-feature-box__body">
+          <p>Discuss the following: How can ESG principles be integrated into investment strategies?</p>
+        </div>
+      </div>
+
+      <p class="sub-label">Example (with subtitle) — <code>--example</code></p>
+      <div class="cfa-feature-box cfa-feature-box--example">
+        <div class="cfa-feature-box__head">
+          <span class="cfa-feature-box__icon">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </span>
+          <span class="cfa-feature-box__title">Example 4</span>
+        </div>
+        <div class="cfa-feature-box__body">
+          <span class="cfa-feature-box__subtitle">Discounted Cash Flow Modeling with ESG Factors</span>
+          <p>An investor is evaluating an oil and gas producer. The investor identifies climate change policy risk as a significant sector-wide risk. To incorporate this into a DCF analysis, the investor might:</p>
+          <ol>
+            <li>Reduce revenue projections based on government policies that subsidise renewable energy sources.</li>
+            <li>Increase the discount rate to account for increased sector-wide volatility in future cash flows.</li>
+          </ol>
+        </div>
+      </div>
+
+      <p class="sub-label">Activity — <code>--activity</code></p>
+      <div class="cfa-feature-box cfa-feature-box--activity">
+        <div class="cfa-feature-box__head">
+          <span class="cfa-feature-box__icon">
+            <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </span>
+          <span class="cfa-feature-box__title">Practice Activity</span>
+        </div>
+        <div class="cfa-feature-box__body">
+          <p>Using the bond calculator above, calculate the price of a 5-year bond with a 6% coupon and $1,000 face value when the discount rate is 7%. Compare to par value and explain the difference.</p>
+        </div>
+      </div>
+
+      <p class="sub-label">Exhibit — <code>--exhibit</code></p>
+      <div class="cfa-feature-box cfa-feature-box--exhibit">
+        <div class="cfa-feature-box__head">
+          <span class="cfa-feature-box__icon">
+            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+          </span>
+          <span class="cfa-feature-box__title">Exhibit 3</span>
+        </div>
+        <div class="cfa-feature-box__body">
+          <span class="cfa-feature-box__subtitle">Base Case Cash Flow Projections (USD thousands)</span>
+          <p>Table or chart content appears here. The exhibit box gives it a consistent visual frame that distinguishes it from body text and workings.</p>
+        </div>
+      </div>
+
+      <p class="sub-label">Key Concept — <code>--concept</code></p>
+      <div class="cfa-feature-box cfa-feature-box--concept">
+        <div class="cfa-feature-box__head">
+          <span class="cfa-feature-box__icon">
+            <i class="far fa-lightbulb" aria-hidden="true"></i>
+          </span>
+          <span class="cfa-feature-box__title">Key Concept</span>
+        </div>
+        <div class="cfa-feature-box__body">
+          <p><strong>Duration</strong> measures a bond's sensitivity to interest rate changes. Longer-duration bonds exhibit greater price volatility for a given change in yield.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <details class="snippet">
+      <summary>▸ HTML snippet</summary>
+      <pre>&lt;!-- Discussion --&gt;
+&lt;div class="cfa-feature-box cfa-feature-box--discussion"&gt;
+  &lt;div class="cfa-feature-box__head"&gt;
+    &lt;span class="cfa-feature-box__icon"&gt;
+      &lt;i class="far fa-comments" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;span class="cfa-feature-box__title"&gt;Discussion&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="cfa-feature-box__body"&gt;
+    &lt;p&gt;Your prompt here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Example with optional subtitle --&gt;
+&lt;div class="cfa-feature-box cfa-feature-box--example"&gt;
+  &lt;div class="cfa-feature-box__head"&gt;
+    &lt;span class="cfa-feature-box__icon"&gt;
+      &lt;i class="fas fa-search" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;span class="cfa-feature-box__title"&gt;Example 4&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="cfa-feature-box__body"&gt;
+    &lt;span class="cfa-feature-box__subtitle"&gt;Title of example&lt;/span&gt;
+    &lt;p&gt;Content…&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!--
+  Variants + suggested FA5 icons:
+  --discussion   far fa-comments
+  --example      fas fa-search
+  --activity     fas fa-pencil-alt
+  --exhibit      fas fa-chart-bar
+  --concept      far fa-lightbulb
+
+  No FA? Use an emoji directly:
+  &lt;span class="cfa-feature-box__icon"&gt;💬&lt;/span&gt;
+  &lt;span class="cfa-feature-box__icon"&gt;🔍&lt;/span&gt;
+  &lt;span class="cfa-feature-box__icon"&gt;✏️&lt;/span&gt;
+--&gt;</pre>
+    </details>
+  </section>
+
+
+</main>
+
+<script src="cfa-components.js"></script>
+</body>
+</html>

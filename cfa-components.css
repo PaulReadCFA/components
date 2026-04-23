@@ -1,0 +1,1186 @@
+/* ================================================================
+   CFA Canvas Component Library  —  cfa-components.css  v2.2
+   ─────────────────────────────────────────────────────────────
+   Canvas deployment : Admin > Themes > Custom CSS (paste all)
+   Local dev         : <link rel="stylesheet" href="cfa-components.css">
+   ─────────────────────────────────────────────────────────────
+   Sections
+     01  Design tokens
+     02  Expandable box        .cfa-expand
+     03  Accordion             .cfa-accordion
+     04  Horizontal tabs       .cfa-tabs
+     05  Equation box          .cfa-equation
+     06  Custom lists          .cfa-list
+     07  Callout boxes         .cfa-callout
+     08  Exploration questions .cfa-exploration
+     09  Lesson box            .cfa-box
+     10  Comparison anchor     .cfa-compare
+     11  Quote box             .cfa-quote
+   ================================================================ */
+
+
+/* ================================================================
+   01  DESIGN TOKENS
+   ================================================================ */
+   :root {
+    /* Primary palette */
+    --cfa-dark-blue:    #06005A;
+    --cfa-bright-blue:  #326AFF;  /* brand colour — use as accent/border only */
+    --cfa-safe-blue:    #2255CC;  /* #326AFF deepened — WCAG AA safe for white text on bg */
+    --cfa-warm-white:   #F7ECDE;
+    --cfa-purple:       #7A46FF;
+    --cfa-cyan:         #00BBFF;
+  
+    /* Secondary palette */
+    --cfa-lime:         #CFD477;
+    --cfa-pine:         #07514F;
+    --cfa-aqua:         #63D3D0;
+    --cfa-mauve:        #ECACE5;
+    --cfa-orange:       #FF8861;  /* brand colour — too light for white text; use dark text on bg */
+  
+    /* Neutrals */
+    --cfa-white:        #FFFFFF;
+    --cfa-grey-light:   #E9E9E9;
+    --cfa-grey-dark:    #555555;  /* ~7.5:1 on white — AAA-friendly body text */
+    --cfa-black:        #000000;
+  
+    /* Semantic aliases */
+    --cfa-c-accent:     var(--cfa-dark-blue);
+    --cfa-c-active:     var(--cfa-bright-blue);
+    --cfa-c-surface:    var(--cfa-white);
+    --cfa-c-bg:         var(--cfa-warm-white);
+    --cfa-c-border:     var(--cfa-grey-light);
+    --cfa-c-text:       var(--cfa-black);
+    --cfa-c-muted:      var(--cfa-grey-dark);
+  
+    /* Shape & motion */
+    --cfa-radius:       4px;
+    --cfa-radius-lg:    8px;
+    --cfa-ease:         160ms ease;
+  }
+  
+  
+  /* ================================================================
+     02  EXPANDABLE BOX   .cfa-expand
+     ─────────────────────────────────────────────────────────────
+     HTML:
+       <div class="cfa-expand">
+         <button class="cfa-expand__trigger" aria-expanded="false"
+                 aria-controls="my-panel-id">
+           <span class="cfa-expand__icon" aria-hidden="true"></span>
+           Title text
+         </button>
+         <div class="cfa-expand__body" id="my-panel-id"><p>…</p></div>
+       </div>
+     JS assigns a unique id + aria-controls if you omit them.
+     Pre-open: add data-open + aria-expanded="true"
+     ================================================================ */
+  .cfa-expand {
+    border: 1px solid var(--cfa-c-border);
+    border-radius: var(--cfa-radius-lg);
+    margin-block: 0.75rem;
+    background: var(--cfa-c-surface);
+    overflow: hidden;
+  }
+  
+  .cfa-expand__trigger {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.65em;
+    padding: 0.7em 0.95em;
+    background: var(--cfa-dark-blue);
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #fff;
+    text-align: left;
+    transition: background var(--cfa-ease);
+  }
+  .cfa-expand__trigger:hover              { background: #0d0080; }
+  .cfa-expand__trigger:focus-visible      { outline: 3px solid var(--cfa-cyan); outline-offset: -3px; }
+  
+  .cfa-expand[data-open] > .cfa-expand__trigger        { background: var(--cfa-bright-blue); }
+  .cfa-expand[data-open] > .cfa-expand__trigger:hover  { background: #1a56e8; }
+  
+  /* Square +/− icon */
+  .cfa-expand__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.3em;
+    height: 1.3em;
+    border: 2px solid rgba(255,255,255,.65);
+    border-radius: 3px;
+    background: rgba(255,255,255,.12);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1em;
+    line-height: 1;
+  }
+  .cfa-expand__icon::before { content: '+'; }
+  .cfa-expand[data-open] > .cfa-expand__trigger .cfa-expand__icon::before { content: '\2212'; }
+  
+  .cfa-expand__body {
+    padding: 0.9em 1.1em 1em;
+    display: none;
+  }
+  .cfa-expand[data-open] > .cfa-expand__body { display: block; }
+  
+  
+  /* ================================================================
+     03  ACCORDION   .cfa-accordion  (wraps .cfa-expand items)
+     ─────────────────────────────────────────────────────────────
+     HTML:
+       <div class="cfa-accordion__controls">
+         <button type="button" class="cfa-accordion__ctrl-btn" data-cfa-open-all>Open all</button>
+         <button type="button" class="cfa-accordion__ctrl-btn" data-cfa-close-all>Collapse all</button>
+       </div>
+       <div class="cfa-accordion">
+         <div class="cfa-expand">…</div>
+         <div class="cfa-expand">…</div>
+       </div>
+     ================================================================ */
+  .cfa-accordion {
+    border: 1px solid var(--cfa-c-border);
+    border-radius: var(--cfa-radius-lg);
+    overflow: hidden;
+    margin-block: 0.5rem;
+  }
+  .cfa-accordion__controls {
+    display: flex;
+    gap: 0.5em;
+    justify-content: flex-end;
+    padding: 0.4em 0;
+    margin-bottom: 0.25em;
+  }
+  .cfa-accordion__ctrl-btn {
+    font: inherit;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--cfa-dark-blue);
+    background: var(--cfa-white);
+    border: 1.5px solid var(--cfa-dark-blue);
+    border-radius: var(--cfa-radius);
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.35em 1em;
+    cursor: pointer;
+    transition: background var(--cfa-ease), color var(--cfa-ease);
+  }
+  .cfa-accordion__ctrl-btn:hover         { background: var(--cfa-dark-blue); color: #fff; }
+  .cfa-accordion__ctrl-btn:focus-visible { outline: 3px solid var(--cfa-cyan); outline-offset: 2px; }
+  
+  /* Strip margin/double-border from nested .cfa-expand items */
+  .cfa-accordion > .cfa-expand {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid var(--cfa-c-border);
+  }
+  .cfa-accordion > .cfa-expand:first-of-type { border-top: none; }
+  
+  
+  /* ================================================================
+     04  HORIZONTAL TABS   .cfa-tabs
+     ─────────────────────────────────────────────────────────────
+     HTML:
+       <div class="cfa-tabs">
+         <div class="cfa-tabs__list" role="tablist" aria-label="…">
+           <button type="button" class="cfa-tabs__tab" role="tab"
+                   aria-selected="true" aria-controls="p1" id="t1">Tab 1</button>
+           <button type="button" class="cfa-tabs__tab" role="tab"
+                   aria-selected="false" aria-controls="p2" id="t2">Tab 2</button>
+         </div>
+         <div class="cfa-tabs__panel" role="tabpanel" id="p1"
+              aria-labelledby="t1" data-active>…</div>
+         <div class="cfa-tabs__panel" role="tabpanel" id="p2"
+              aria-labelledby="t2">…</div>
+       </div>
+     Keyboard: ← → Home End
+     ================================================================ */
+  .cfa-tabs { margin-block: 1rem; }
+  
+  .cfa-tabs__list {
+    display: flex;
+    gap: 0.4em;
+    padding: 0.5em 0.6em;
+    background: var(--cfa-grey-light);
+    border-radius: var(--cfa-radius-lg) var(--cfa-radius-lg) 0 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+  }
+  .cfa-tabs__list::-webkit-scrollbar { display: none; }
+  
+  .cfa-tabs__tab {
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.85em;
+    color: var(--cfa-c-muted);
+    background: var(--cfa-white);
+    border: 1.5px solid transparent;
+    border-radius: var(--cfa-radius);
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.45em 1.15em;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12);
+    transition: background var(--cfa-ease), color var(--cfa-ease),
+                border-color var(--cfa-ease), box-shadow var(--cfa-ease);
+  }
+  .cfa-tabs__tab:hover {
+    color: var(--cfa-dark-blue);
+    border-color: var(--cfa-dark-blue);
+    box-shadow: 0 2px 6px rgba(6,0,90,.15);
+  }
+  .cfa-tabs__tab[aria-selected="true"] {
+    background: var(--cfa-safe-blue);
+    color: #fff;
+    border-color: var(--cfa-safe-blue);
+    box-shadow: 0 2px 8px rgba(34,85,204,.3);
+  }
+  .cfa-tabs__tab:focus-visible { outline: 3px solid var(--cfa-cyan); outline-offset: 2px; }
+  
+  .cfa-tabs__panel {
+    padding: 1.25em 1.1em;
+    border: 1.5px solid var(--cfa-grey-light);
+    border-top: none;
+    border-radius: 0 0 var(--cfa-radius-lg) var(--cfa-radius-lg);
+    background: var(--cfa-white);
+    display: none;
+  }
+  .cfa-tabs__panel[data-active] { display: block; }
+  
+  
+  /* ================================================================
+     05  EQUATION BOX   .cfa-equation
+     ─────────────────────────────────────────────────────────────
+     HTML:
+       <div class="cfa-equation">
+         <span class="cfa-equation__label">Bond Pricing</span>
+         <span class="cfa-equation__num">Eq. 1</span>
+         \[ … MathJax … \]
+       </div>
+       <div class="cfa-equation cfa-equation--centered"> … </div>
+     ================================================================ */
+  .cfa-equation {
+    background: var(--cfa-warm-white);
+    border-left: 4px solid var(--cfa-bright-blue);
+    border-radius: 0 var(--cfa-radius-lg) var(--cfa-radius-lg) 0;
+    padding: 0.9em 1.4em;
+    margin-block: 1.25rem;
+    overflow-x: auto;
+    font-size: 1.05em;
+  }
+  .cfa-equation--centered {
+    text-align: center;
+    border-left: none;
+    border-top: 3px solid var(--cfa-bright-blue);
+    border-radius: var(--cfa-radius-lg);
+    padding: 1em 1.5em;
+  }
+  .cfa-equation__label {
+    display: block;
+    font-size: 0.7em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--cfa-bright-blue);
+    margin-bottom: 0.5em;
+  }
+  .cfa-equation__num {
+    float: right;
+    font-size: 0.78em;
+    color: var(--cfa-c-muted);
+    margin-top: 0.2em;
+  }
+  
+  
+  /* ================================================================
+     06  CUSTOM LISTS   .cfa-list
+     ─────────────────────────────────────────────────────────────
+     Modifiers:
+       --check          green tick ✓
+       --cross          orange cross ✕
+       --arrow          bright-blue arrow →
+       --dash           em dash —
+       --diamond        purple diamond ◆
+       --numcircle      dark-blue numbered circles
+       --checkbox       empty square (unchecked)
+       --checkbox-done  filled square, strikethrough (all done)
+       --tasklist       mixed — add class="checked" to <li>
+     ================================================================ */
+  .cfa-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0;
+  }
+  .cfa-list li {
+    padding: 0.3em 0 0.3em 2em;
+    position: relative;
+    line-height: 1.6;
+  }
+  .cfa-list li::before {
+    position: absolute;
+    left: 0;
+    top: 0.33em;
+    line-height: 1.4;
+    width: 1.5em;
+    text-align: center;
+  }
+  
+  .cfa-list--check li::before   { content: '\2713'; color: var(--cfa-pine);        font-weight: 700; }
+  .cfa-list--cross li::before   { content: '\2715'; color: var(--cfa-orange);      font-weight: 700; }
+  .cfa-list--arrow li::before   { content: '\2192'; color: var(--cfa-bright-blue); font-weight: 600; }
+  .cfa-list--dash  li::before   { content: '\2014'; color: var(--cfa-c-muted); }
+  .cfa-list--diamond li::before { content: '\25C6'; color: var(--cfa-purple); font-size: 0.65em; top: 0.55em; }
+  
+  /* Numbered circles */
+  .cfa-list--numcircle              { counter-reset: cfa-item; }
+  .cfa-list--numcircle li           { counter-increment: cfa-item; padding-left: 2.25em; }
+  .cfa-list--numcircle li::before {
+    content: counter(cfa-item);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 50%;
+    background: var(--cfa-dark-blue);
+    color: #fff;
+    font-size: 0.7em;
+    font-weight: 700;
+    top: 0.28em;
+  }
+  
+  /* Square checkbox — unchecked */
+  .cfa-list--checkbox li            { padding-left: 2.1em; }
+  .cfa-list--checkbox li::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid var(--cfa-grey-dark);
+    border-radius: 2px;
+    background: var(--cfa-white);
+    top: 0.35em;
+    left: 0.1em;
+  }
+  
+  /* Square checkbox — all checked */
+  .cfa-list--checkbox-done li {
+    padding-left: 2.1em;
+    color: var(--cfa-c-muted);
+    text-decoration: line-through;
+  }
+  .cfa-list--checkbox-done li::before {
+    content: '\2713';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    border: 2px solid var(--cfa-pine);
+    border-radius: 2px;
+    background: var(--cfa-pine);
+    color: #fff;
+    font-size: 0.72em;
+    font-weight: 700;
+    line-height: 1;
+    top: 0.33em;
+    left: 0.1em;
+  }
+  
+  /* Task list — mixed; add class="checked" to individual <li> */
+  .cfa-list--tasklist li            { padding-left: 2.1em; }
+  .cfa-list--tasklist li::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid var(--cfa-grey-dark);
+    border-radius: 2px;
+    background: var(--cfa-white);
+    top: 0.35em;
+    left: 0.1em;
+  }
+  .cfa-list--tasklist li.checked {
+    color: var(--cfa-c-muted);
+    text-decoration: line-through;
+  }
+  .cfa-list--tasklist li.checked::before {
+    content: '\2713';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cfa-pine);
+    border-color: var(--cfa-pine);
+    color: #fff;
+    font-size: 0.72em;
+    font-weight: 700;
+    line-height: 1;
+  }
+  
+  
+  /* ================================================================
+     07  CALLOUT BOXES   .cfa-callout
+     ─────────────────────────────────────────────────────────────
+     DesignPLUS-style family with .cfa-feature-box: soft tinted shell,
+     centred column head (large circular icon + title), body separated
+     by a light border-top. Titles use dark accent text on the shell
+     (not a solid inverse-colour bar).
+  
+     WCAG: warning/stop use dark text on light tinted shells; brand
+     orange is not used as a solid header with white type.
+  
+     HTML:
+       <div class="cfa-callout cfa-callout--note">
+         <div class="cfa-callout__head">
+           <span class="cfa-callout__icon">
+             <i class="fas fa-info-circle" aria-hidden="true"></i>
+           </span>
+           <span class="cfa-callout__title">Note</span>
+         </div>
+         <div class="cfa-callout__body"><p>…</p></div>
+       </div>
+  
+     Variants: --note  --warning  --key  --tip  --stop
+     ================================================================ */
+  .cfa-callout {
+    margin-block: 1.25rem;
+    border-radius: var(--cfa-radius-lg);
+    overflow: hidden;
+    border: 1px solid #c8d8ee;
+    background: #eaf1fb;
+  }
+  
+  .cfa-callout__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.55em;
+    padding: 1.45em 1.4em 1.05em;
+    background: transparent;
+    color: var(--cfa-dark-blue);
+  }
+  
+  .cfa-callout__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3.2em;
+    height: 3.2em;
+    border-radius: 50%;
+    background: rgba(34, 85, 204, 0.14);
+    border: 2px solid rgba(34, 85, 204, 0.28);
+    color: var(--cfa-safe-blue);
+    font-size: 1.25em;
+    line-height: 1;
+  }
+  .cfa-callout__icon .fa,
+  .cfa-callout__icon .fas,
+  .cfa-callout__icon .far { font-size: 1em; line-height: 1; }
+  
+  .cfa-callout__title {
+    font-size: 1.05em;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  
+  .cfa-callout__body {
+    border-top: 1px solid #c0d0e4;
+    padding: 1.05em 1.45em 1.3em;
+    font-size: 0.93em;
+    line-height: 1.65;
+    background: transparent;
+    color: var(--cfa-black);
+  }
+  .cfa-callout__body > *:first-child { margin-top: 0; }
+  .cfa-callout__body > *:last-child  { margin-bottom: 0; }
+  
+  /* ── Variants ─────────────────────────────────────────────── */
+  
+  .cfa-callout--note {
+    background: #eaf1fb;
+    border-color: #c8d8ee;
+  }
+  .cfa-callout--note .cfa-callout__head   { color: var(--cfa-dark-blue); }
+  .cfa-callout--note .cfa-callout__title  { color: var(--cfa-dark-blue); }
+  .cfa-callout--note .cfa-callout__icon {
+    background: rgba(34, 85, 204, 0.14);
+    border-color: rgba(34, 85, 204, 0.28);
+    color: var(--cfa-safe-blue);
+  }
+  .cfa-callout--note .cfa-callout__body {
+    border-top-color: #c0d0e4;
+    color: #06005A;
+  }
+  
+  .cfa-callout--warning {
+    background: #fff8f0;
+    border-color: #ffd0a8;
+  }
+  .cfa-callout--warning .cfa-callout__head  { color: #3d2200; }
+  .cfa-callout--warning .cfa-callout__title { color: #3d2200; }
+  .cfa-callout--warning .cfa-callout__icon {
+    background: rgba(255, 136, 97, 0.18);
+    border-color: rgba(180, 90, 40, 0.35);
+    color: #a84318;
+  }
+  .cfa-callout--warning .cfa-callout__body {
+    border-top-color: #f0c8a0;
+    color: #3d2200;
+  }
+  
+  .cfa-callout--key {
+    background: #eaf7f4;
+    border-color: #b5ddd7;
+  }
+  .cfa-callout--key .cfa-callout__head   { color: var(--cfa-pine); }
+  .cfa-callout--key .cfa-callout__title  { color: var(--cfa-pine); }
+  .cfa-callout--key .cfa-callout__icon {
+    background: rgba(7, 81, 79, 0.12);
+    border-color: rgba(7, 81, 79, 0.25);
+    color: var(--cfa-pine);
+  }
+  .cfa-callout--key .cfa-callout__body {
+    border-top-color: #b5ddd7;
+    color: #062e1e;
+  }
+  
+  .cfa-callout--tip {
+    background: #f2eeff;
+    border-color: #d0c0f0;
+  }
+  .cfa-callout--tip .cfa-callout__head   { color: var(--cfa-purple); }
+  .cfa-callout--tip .cfa-callout__title  { color: var(--cfa-purple); }
+  .cfa-callout--tip .cfa-callout__icon {
+    background: rgba(122, 70, 255, 0.12);
+    border-color: rgba(122, 70, 255, 0.25);
+    color: var(--cfa-purple);
+  }
+  .cfa-callout--tip .cfa-callout__body {
+    border-top-color: #d0c0f0;
+    color: #1e0b40;
+  }
+  
+  .cfa-callout--stop {
+    background: #fdecea;
+    border-color: #f5b0a8;
+  }
+  .cfa-callout--stop .cfa-callout__head   { color: #7f1212; }
+  .cfa-callout--stop .cfa-callout__title  { color: #7f1212; }
+  .cfa-callout--stop .cfa-callout__icon {
+    background: rgba(211, 47, 47, 0.14);
+    border-color: rgba(183, 28, 28, 0.32);
+    color: #c62828;
+  }
+  .cfa-callout--stop .cfa-callout__body {
+    border-top-color: #f0b8b0;
+    color: #3d0d08;
+  }
+  
+  
+  /* ================================================================
+     08  EXPLORATION QUESTIONS   .cfa-exploration
+     ─────────────────────────────────────────────────────────────
+     Same soft shell + centred head family as .cfa-feature-box.
+     Composed from .cfa-tabs + .cfa-expand — NO extra JS needed.
+     Optional: <span class="cfa-exploration__title">…</span> after the
+     heading icon. See demo-exploration.html for the full HTML pattern.
+     ================================================================ */
+  .cfa-exploration {
+    margin-block: 1.5rem;
+    border-radius: var(--cfa-radius-lg);
+    overflow: hidden;
+    border: 1px solid #c8d8ee;
+    background: #eaf1fb;
+    box-shadow: none;
+  }
+  .cfa-exploration__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.55em;
+    padding: 1.45em 1.4em 1.05em;
+    background: transparent;
+    color: var(--cfa-dark-blue);
+    border-bottom: 1px solid #c0d0e4;
+    user-select: none;
+  }
+  .cfa-exploration__heading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2em;
+    height: 3.2em;
+    border-radius: 50%;
+    background: rgba(34, 85, 204, 0.14);
+    border: 2px solid rgba(34, 85, 204, 0.28);
+    color: var(--cfa-safe-blue);
+    font-size: 1.15em;
+    line-height: 1;
+  }
+  .cfa-exploration__title {
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+  
+  .cfa-exploration .cfa-tabs       { margin: 0; }
+  .cfa-exploration .cfa-tabs__list {
+    background: rgba(6, 0, 90, 0.04);
+    border-radius: 0;
+    padding: 0.5em 0.65em;
+    gap: 0.4em;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .cfa-exploration .cfa-tabs__tab {
+    color: var(--cfa-c-muted);
+    background: var(--cfa-white);
+    border: 1.5px solid transparent;
+    font-size: 0.85em;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .cfa-exploration .cfa-tabs__tab:hover {
+    color: var(--cfa-dark-blue);
+    background: var(--cfa-white);
+    border-color: var(--cfa-dark-blue);
+    box-shadow: 0 2px 6px rgba(6,0,90,.12);
+  }
+  .cfa-exploration .cfa-tabs__tab[aria-selected="true"] {
+    background: var(--cfa-safe-blue);
+    color: #fff;
+    border-color: var(--cfa-safe-blue);
+    box-shadow: 0 2px 8px rgba(34,85,204,.28);
+  }
+  .cfa-exploration .cfa-tabs__tab:focus-visible {
+    outline: 3px solid var(--cfa-cyan);
+    outline-offset: 2px;
+  }
+  
+  .cfa-exploration .cfa-tabs__panel {
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid #c0d0e4;
+    background: transparent;
+    padding: 1.2em 1.35em 1.35em;
+  }
+  
+  /* Setup block — white card on warm-white panel */
+  .cfa-exploration__setup {
+    margin: 0 0 0.85em;
+    font-size: 0.91em;
+    line-height: 1.7;
+    background: var(--cfa-white);
+    border: 1px solid var(--cfa-grey-light);
+    border-radius: var(--cfa-radius);
+    padding: 0.75em 0.95em;
+  }
+  .cfa-exploration__setup p          { margin: 0 0 0.4em; }
+  .cfa-exploration__setup p:last-child { margin-bottom: 0; }
+  
+  /* Question */
+  .cfa-exploration__question {
+    margin: 0 0 0.95em;
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--cfa-dark-blue);
+    padding: 0 0 0.55em;
+    background: transparent;
+    border-left: none;
+    border-bottom: 1px solid #c0d0e4;
+    border-radius: 0;
+    line-height: 1.55;
+  }
+  
+  /* Check Answer expander — pine green */
+  .cfa-exploration .cfa-expand {
+    margin: 0;
+    border: none;
+    border-radius: var(--cfa-radius);
+    overflow: visible;
+    background: transparent;
+  }
+  .cfa-exploration .cfa-expand__trigger {
+    background: var(--cfa-pine);
+    border-radius: var(--cfa-radius);
+    font-size: 0.85em;
+  }
+  .cfa-exploration .cfa-expand__trigger:hover         { background: #053e3c; }
+  .cfa-exploration .cfa-expand[data-open] > .cfa-expand__trigger {
+    background: var(--cfa-pine);
+    border-radius: var(--cfa-radius) var(--cfa-radius) 0 0;
+  }
+  .cfa-exploration .cfa-expand__icon                  { border-color: rgba(255,255,255,.6); }
+  .cfa-exploration .cfa-expand__body {
+    background: var(--cfa-white);
+    border: 1.5px solid #b5dfc8;
+    border-top: none;
+    border-radius: 0 0 var(--cfa-radius) var(--cfa-radius);
+    padding: 0.9em 1em;
+    font-size: 0.9em;
+    color: #0a2e1e;
+    line-height: 1.7;
+  }
+  .cfa-exploration .cfa-expand__body p          { margin: 0 0 0.5em; }
+  .cfa-exploration .cfa-expand__body p:last-child { margin-bottom: 0; }
+  
+  
+  /* ================================================================
+     09  LESSON BOX   .cfa-box
+     ─────────────────────────────────────────────────────────────
+     DesignPLUS-style learner card: same soft shell + centred head
+     pattern as .cfa-feature-box. Wrap the heading words in
+     <span class="cfa-box__title">…</span> for the clearest markup
+     (plain text after the icon still works).
+  
+     HTML:
+       <div class="cfa-box cfa-box--learn">
+         <div class="cfa-box__head">
+           <span class="cfa-box__icon">
+             <i class="fas fa-book-open" aria-hidden="true"></i>
+           </span>
+           <span class="cfa-box__title">What You Will Learn</span>
+         </div>
+         <div class="cfa-box__body"><p>…</p></div>
+       </div>
+  
+     Variants: --learn  --summary  --reflection  --example
+     ================================================================ */
+  .cfa-box {
+    margin-block: 1.25rem;
+    border-radius: var(--cfa-radius-lg);
+    overflow: hidden;
+    border: 1px solid #c8d8ee;
+    background: #eaf1fb;
+  }
+  .cfa-box__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.55em;
+    padding: 1.45em 1.4em 1.05em;
+    background: transparent;
+    color: var(--cfa-dark-blue);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  
+  .cfa-box__title {
+    font-size: 1.1em;
+    line-height: 1.3;
+    max-width: 28em;
+  }
+  
+  .cfa-box__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3.2em;
+    height: 3.2em;
+    border-radius: 50%;
+    background: rgba(34, 85, 204, 0.14);
+    border: 2px solid rgba(34, 85, 204, 0.28);
+    color: var(--cfa-safe-blue);
+    font-size: 1.25em;
+    line-height: 1;
+  }
+  .cfa-box__icon .fa,
+  .cfa-box__icon .fas,
+  .cfa-box__icon .far { font-size: 1em; line-height: 1; }
+  
+  .cfa-box__body {
+    border-top: 1px solid #c0d0e4;
+    padding: 1.05em 1.45em 1.3em;
+    background: transparent;
+    font-size: 0.93em;
+    line-height: 1.7;
+    color: var(--cfa-black);
+  }
+  .cfa-box__body p             { margin: 0 0 0.5em; }
+  .cfa-box__body p:last-child  { margin-bottom: 0; }
+  
+  .cfa-box--learn {
+    background: #eaf1fb;
+    border-color: #c8d8ee;
+  }
+  .cfa-box--learn .cfa-box__head  { color: var(--cfa-dark-blue); }
+  .cfa-box--learn .cfa-box__title { color: var(--cfa-dark-blue); }
+  .cfa-box--learn .cfa-box__icon {
+    background: rgba(34, 85, 204, 0.14);
+    border-color: rgba(34, 85, 204, 0.28);
+    color: var(--cfa-safe-blue);
+  }
+  .cfa-box--learn .cfa-box__body { border-top-color: #c0d0e4; }
+  
+  .cfa-box--summary {
+    background: #eaf7f4;
+    border-color: #b5ddd7;
+  }
+  .cfa-box--summary .cfa-box__head  { color: var(--cfa-pine); }
+  .cfa-box--summary .cfa-box__title { color: var(--cfa-pine); }
+  .cfa-box--summary .cfa-box__icon {
+    background: rgba(7, 81, 79, 0.12);
+    border-color: rgba(7, 81, 79, 0.25);
+    color: var(--cfa-pine);
+  }
+  .cfa-box--summary .cfa-box__body { border-top-color: #b5ddd7; }
+  
+  .cfa-box--reflection {
+    background: #f2eeff;
+    border-color: #d0c0f0;
+  }
+  .cfa-box--reflection .cfa-box__head  { color: var(--cfa-purple); }
+  .cfa-box--reflection .cfa-box__title { color: var(--cfa-purple); }
+  .cfa-box--reflection .cfa-box__icon {
+    background: rgba(122, 70, 255, 0.12);
+    border-color: rgba(122, 70, 255, 0.25);
+    color: var(--cfa-purple);
+  }
+  .cfa-box--reflection .cfa-box__body { border-top-color: #d0c0f0; color: #1e0b40; }
+  
+  .cfa-box--example {
+    background: #eef8f8;
+    border-color: #a0d0d0;
+  }
+  .cfa-box--example .cfa-box__head  { color: #066363; }
+  .cfa-box--example .cfa-box__title { color: #066363; }
+  .cfa-box--example .cfa-box__icon {
+    background: rgba(6, 99, 99, 0.12);
+    border-color: rgba(6, 99, 99, 0.28);
+    color: #066363;
+  }
+  .cfa-box--example .cfa-box__body { border-top-color: #a8d4d4; color: #0a2e2e; }
+  
+  
+  /* ================================================================
+     10  COMPARISON ANCHOR   .cfa-compare
+     ─────────────────────────────────────────────────────────────
+     Side-by-side concept cards. Stacks on narrow screens.
+  
+     HTML:
+       <div class="cfa-compare">
+         <p class="cfa-compare__label">Compare</p>   ← optional
+         <div class="cfa-compare__grid">
+           <div class="cfa-compare__card">
+             <div class="cfa-compare__card-head">Concept A</div>
+             <div class="cfa-compare__card-body"><p>…</p></div>
+           </div>
+           <div class="cfa-compare__card">
+             <div class="cfa-compare__card-head">Concept B</div>
+             <div class="cfa-compare__card-body"><p>…</p></div>
+           </div>
+         </div>
+         <p class="cfa-compare__note">…</p>   ← optional
+       </div>
+  
+     Card head colour modifiers (on .cfa-compare__card):
+       --blue (default)  --bright  --purple  --pine  --orange
+     ================================================================ */
+  .cfa-compare { margin-block: 1.25rem; }
+  .cfa-compare__label {
+    display: block;
+    font-size: 0.72em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--cfa-c-muted);
+    margin: 0 0 0.5em;
+  }
+  .cfa-compare__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 560px) {
+    .cfa-compare__grid { grid-template-columns: 1fr; }
+  }
+  .cfa-compare__card {
+    border-radius: var(--cfa-radius-lg);
+    overflow: hidden;
+    border: 1.5px solid var(--cfa-grey-light);
+  }
+  .cfa-compare__card-head {
+    background: var(--cfa-dark-blue);
+    color: #fff;
+    padding: 0.55em 0.9em;
+    font-weight: 700;
+    font-size: 0.88em;
+    letter-spacing: 0.03em;
+  }
+  .cfa-compare__card-body {
+    padding: 0.85em 0.95em;
+    font-size: 0.91em;
+    line-height: 1.65;
+    background: var(--cfa-white);
+  }
+  .cfa-compare__card-body p            { margin: 0 0 0.5em; }
+  .cfa-compare__card-body p:last-child { margin-bottom: 0; }
+  .cfa-compare__note {
+    margin: 0.6em 0 0;
+    font-size: 0.85em;
+    color: var(--cfa-c-muted);
+    font-style: italic;
+  }
+  
+  /* Head colour modifiers */
+  .cfa-compare__card--blue   .cfa-compare__card-head { background: var(--cfa-dark-blue); }
+  .cfa-compare__card--bright .cfa-compare__card-head { background: var(--cfa-bright-blue); }
+  .cfa-compare__card--purple .cfa-compare__card-head { background: var(--cfa-purple); }
+  .cfa-compare__card--pine   .cfa-compare__card-head { background: var(--cfa-pine); }
+  .cfa-compare__card--orange .cfa-compare__card-head { background: var(--cfa-orange); color: var(--cfa-black); }
+  
+  
+  /* ================================================================
+     11  QUOTE BOX   .cfa-quote
+     ─────────────────────────────────────────────────────────────
+     For ethics standards, important verbatim text, and pull quotes.
+     No icon stripe — prominence comes from border and weight.
+  
+     HTML:
+       <div class="cfa-quote cfa-quote--standard">
+         <span class="cfa-quote__title">Standard I(C): Misrepresentation</span>
+         <div class="cfa-quote__body">Members and Candidates must not…</div>
+       </div>
+  
+     Variants: (default)  --standard  --pullquote
+     ================================================================ */
+  .cfa-quote {
+    margin-block: 1.25rem;
+    padding: 1.1em 1.3em;
+    border-radius: var(--cfa-radius-lg);
+    border-left: 5px solid var(--cfa-dark-blue);
+    background: var(--cfa-warm-white);
+    font-size: 0.95em;
+    line-height: 1.7;
+  }
+  .cfa-quote__title {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--cfa-dark-blue);
+    margin-bottom: 0.5em;
+  }
+  
+  /* Standard — for ethics standards / verbatim testable text */
+  .cfa-quote--standard {
+    background: #f0eeff;
+    border-left: 5px solid var(--cfa-dark-blue);
+    color: var(--cfa-dark-blue);
+  }
+  .cfa-quote--standard .cfa-quote__title { color: var(--cfa-dark-blue); }
+  .cfa-quote--standard .cfa-quote__body  { font-size: 1.05em; font-weight: 500; }
+  
+  /* Pull quote — centred, no icon, border top + bottom */
+  .cfa-quote--pullquote {
+    border-left: none;
+    border-top: 3px solid var(--cfa-bright-blue);
+    border-bottom: 3px solid var(--cfa-bright-blue);
+    background: transparent;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1em;
+    color: var(--cfa-dark-blue);
+    padding: 1.2em 2em;
+  }
+  
+  
+  /* ================================================================
+     12  FEATURE BOX   .cfa-feature-box
+     ─────────────────────────────────────────────────────────────
+     Cidilabs-style centered-icon content block. Bigger and more
+     display-prominent than .cfa-box. Used for Discussion prompts,
+     Examples, Activities, Exhibits, and Key Concepts.
+  
+     Font Awesome icons are available in Canvas. Use <i class="fa …">
+     inside .cfa-feature-box__icon. If FA is unavailable, use a plain
+     emoji or Unicode character — the circle container will still render.
+  
+     HTML:
+       <div class="cfa-feature-box cfa-feature-box--discussion">
+         <div class="cfa-feature-box__head">
+           <span class="cfa-feature-box__icon">
+             <i class="fa fa-comments" aria-hidden="true"></i>
+           </span>
+           <span class="cfa-feature-box__title">Discussion</span>
+         </div>
+         <div class="cfa-feature-box__body">
+           <p>Your prompt or content here.</p>
+         </div>
+       </div>
+  
+     Variants:
+       --discussion   bright-blue   fa-comments
+       --example      dark-blue     fa-search / fa-magnifying-glass
+       --activity     pine          fa-pencil / fa-pen
+       --exhibit      purple        fa-chart-bar / fa-table
+       --concept      cyan-dark     fa-lightbulb
+     ================================================================ */
+  
+  /* ---- Base shell ------------------------------------------- */
+  .cfa-feature-box {
+    margin-block: 1.5rem;
+    border-radius: var(--cfa-radius-lg);
+    border: 1px solid #c8d8ee;
+    background: #eaf1fb;
+    overflow: hidden;
+  }
+  
+  /* ---- Head: icon + title, centered ----------------------- */
+  .cfa-feature-box__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.6em 1.5em 1.1em;
+    gap: 0.6em;
+  }
+  
+  /* Circular icon badge */
+  .cfa-feature-box__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.2em;       /* ~51px at 16px base */
+    height: 3.2em;
+    border-radius: 50%;
+    background: rgba(50, 106, 255, 0.15);
+    color: var(--cfa-dark-blue);
+    font-size: 1.25em;  /* scales the icon inside */
+    border: 2px solid rgba(50, 106, 255, 0.25);
+    flex-shrink: 0;
+  }
+  /* FA icon sizing inside the badge */
+  .cfa-feature-box__icon .fa,
+  .cfa-feature-box__icon .fas,
+  .cfa-feature-box__icon .far,
+  .cfa-feature-box__icon .fab {
+    font-size: 1em;
+    line-height: 1;
+  }
+  
+  /* Title */
+  .cfa-feature-box__title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--cfa-dark-blue);
+    line-height: 1.3;
+  }
+  
+  /* ---- Divider between head and body ----------------------- */
+  .cfa-feature-box__body {
+    border-top: 1px solid #c0d0e4;
+    padding: 1.1em 1.5em 1.4em;
+    font-size: 0.93em;
+    line-height: 1.7;
+    color: var(--cfa-black);
+  }
+  .cfa-feature-box__body > *:first-child { margin-top: 0; }
+  .cfa-feature-box__body > *:last-child  { margin-bottom: 0; }
+  
+  /* Optional sub-heading inside body (e.g. "Example 4 title") */
+  .cfa-feature-box__subtitle {
+    display: block;
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--cfa-dark-blue);
+    border-bottom: 1px solid #c0d0e4;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.75em;
+  }
+  
+  /* ---- Variant: Discussion — safe blue (6.48:1) -------------- */
+  .cfa-feature-box--discussion {
+    background: #eaf1fb;
+    border-color: #c8d8ee;
+  }
+  .cfa-feature-box--discussion .cfa-feature-box__icon {
+    background: rgba(34, 85, 204, 0.14);
+    border-color: rgba(34, 85, 204, 0.28);
+    color: var(--cfa-safe-blue);
+  }
+  
+  /* ---- Variant: Example — dark blue (18.18:1) ---------------- */
+  .cfa-feature-box--example {
+    background: #edf2fb;
+    border-color: #c5d2e8;
+  }
+  .cfa-feature-box--example .cfa-feature-box__icon {
+    background: rgba(6, 0, 90, 0.1);
+    border-color: rgba(6, 0, 90, 0.2);
+    color: var(--cfa-dark-blue);
+  }
+  
+  /* ---- Variant: Activity — pine (9.13:1) --------------------- */
+  .cfa-feature-box--activity {
+    background: #eaf7f4;
+    border-color: #b5ddd7;
+  }
+  .cfa-feature-box--activity .cfa-feature-box__icon {
+    background: rgba(7, 81, 79, 0.12);
+    border-color: rgba(7, 81, 79, 0.25);
+    color: var(--cfa-pine);
+  }
+  .cfa-feature-box--activity .cfa-feature-box__title   { color: var(--cfa-pine); }
+  .cfa-feature-box--activity .cfa-feature-box__subtitle { border-bottom-color: #b5ddd7; }
+  .cfa-feature-box--activity .cfa-feature-box__body    { border-top-color: #b5ddd7; }
+  
+  /* ---- Variant: Exhibit — purple (5.06:1) -------------------- */
+  .cfa-feature-box--exhibit {
+    background: #f2eeff;
+    border-color: #d0c0f0;
+  }
+  .cfa-feature-box--exhibit .cfa-feature-box__icon {
+    background: rgba(122, 70, 255, 0.12);
+    border-color: rgba(122, 70, 255, 0.25);
+    color: var(--cfa-purple);
+  }
+  .cfa-feature-box--exhibit .cfa-feature-box__title   { color: var(--cfa-purple); }
+  .cfa-feature-box--exhibit .cfa-feature-box__subtitle { border-bottom-color: #d0c0f0; }
+  .cfa-feature-box--exhibit .cfa-feature-box__body    { border-top-color: #d0c0f0; }
+  
+  /* ---- Variant: Concept — warm neutral ----------------------- */
+  .cfa-feature-box--concept {
+    background: #fdf6ee;
+    border-color: #e8d8c0;
+  }
+  .cfa-feature-box--concept .cfa-feature-box__icon {
+    background: rgba(176, 125, 43, 0.13);
+    border-color: rgba(176, 125, 43, 0.28);
+    color: #8a5e1a;
+  }
+  .cfa-feature-box--concept .cfa-feature-box__title   { color: #6b4810; }
+  .cfa-feature-box--concept .cfa-feature-box__subtitle { border-bottom-color: #e8d8c0; }
+  .cfa-feature-box--concept .cfa-feature-box__body    { border-top-color: #e8d8c0; }
+
+
+/* ================================================================
+   MOTION — respect user preference (WCAG 2.3.3)
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .cfa-expand__trigger,
+  .cfa-accordion__ctrl-btn,
+  .cfa-tabs__tab {
+    transition: none;
+  }
+}

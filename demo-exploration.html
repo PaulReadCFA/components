@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFA — Exploration Questions Demo</title>
+<link rel="stylesheet" href="cfa-components.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+  /* ── Demo chrome only — not shipped to Canvas ─────────────── */
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    background: #F7ECDE;
+    color: #000;
+    line-height: 1.6;
+  }
+
+  .site-header {
+    background: #06005A; color: #fff;
+    padding: 1.75rem 2.5rem 1.5rem;
+  }
+  .site-header h1 {
+    margin: 0 0 0.15em;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.4rem; font-weight: 600;
+  }
+  .site-header p { margin: 0; opacity: .6; font-size: 0.82rem; }
+
+  .site-nav {
+    background: #0a0060; padding: 0 2rem;
+    display: flex; gap: 0; flex-wrap: wrap;
+  }
+  .site-nav a {
+    color: rgba(255,255,255,.6); text-decoration: none;
+    font-size: 0.77rem; font-weight: 600;
+    letter-spacing: .04em; text-transform: uppercase;
+    padding: 0.45rem 0.85rem;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s; display: block;
+  }
+  .site-nav a:hover { color: #fff; border-bottom-color: #326AFF; }
+
+  .page { max-width: 760px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
+
+  .section { margin-bottom: 3rem; }
+  .section-label {
+    font-size: 0.69rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: #646464; margin: 0 0 0.6rem;
+  }
+  .note { font-size: 0.85rem; color: #646464; margin: 0 0 1.25rem; }
+
+  details.snippet summary {
+    font-size: 0.77rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: #646464;
+    cursor: pointer; padding: 0.4rem 0; margin-top: 1rem;
+  }
+  details.snippet summary:hover { color: #06005A; }
+  details.snippet pre {
+    background: #06005A; color: #c9d1e0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.77rem; line-height: 1.65;
+    padding: 1.1rem 1.4rem; border-radius: 6px;
+    overflow-x: auto; margin: 0.4rem 0 0;
+    tab-size: 2; white-space: pre;
+  }
+  sup { font-size: 0.72em; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Exploration Questions Component</h1>
+  <p>Composed from .cfa-tabs + .cfa-expand · No extra JS needed · <a href="index.html" style="color:rgba(255,255,255,.55);font-size:.85em">← Index</a></p>
+</header>
+<nav class="site-nav">
+  <a href="#demo">Live demo</a>
+  <a href="#snippet">HTML snippet</a>
+  <a href="#notes">Notes</a>
+</nav>
+
+<main class="page">
+
+
+  <!-- ============================================================
+    LIVE DEMO
+    ============================================================ -->
+  <section class="section" id="demo">
+    <p class="section-label">Live demo — Bond Valuation</p>
+    <p class="note">Tab through questions. Reveal answers with the green button. Keyboard: ← → on tabs, Space/Enter on Check Answer.</p>
+
+    <div class="cfa-exploration">
+
+      <div class="cfa-exploration__heading" aria-hidden="true">
+        <span class="cfa-exploration__heading-icon">◈</span>
+        <span class="cfa-exploration__title">Exploration Questions</span>
+      </div>
+
+      <div class="cfa-tabs">
+        <div class="cfa-tabs__list" role="tablist" aria-label="Exploration Questions">
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="true"  aria-controls="eq-p1" id="eq-t1">Question 1</button>
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="false" aria-controls="eq-p2" id="eq-t2">Question 2</button>
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="false" aria-controls="eq-p3" id="eq-t3">Question 3</button>
+          <button type="button" class="cfa-tabs__tab" role="tab" aria-selected="false" aria-controls="eq-p4" id="eq-t4">Question 4</button>
+        </div>
+
+        <!-- Panel 1 -->
+        <div class="cfa-tabs__panel" role="tabpanel" id="eq-p1" aria-labelledby="eq-t1" data-active>
+          <div class="cfa-exploration__setup">
+            <p>A bond has a face value of <strong>$1,000</strong>, an annual coupon rate of <strong>5%</strong>, and matures in <strong>3 years</strong>. The market discount rate is <strong>4%</strong>.</p>
+          </div>
+          <p class="cfa-exploration__question">What is the fair value (price) of this bond?</p>
+          <div class="cfa-expand">
+            <button type="button" class="cfa-expand__trigger" aria-expanded="false"
+                    aria-controls="eq-ans-1" aria-label="Check answer for Question 1">
+              <span class="cfa-expand__icon" aria-hidden="true"></span>
+              Check Answer
+            </button>
+            <div class="cfa-expand__body" id="eq-ans-1">
+              <p>Discount each cash flow at 4%:</p>
+              <p>P = 50/1.04 + 50/1.04² + 1,050/1.04³ = 48.08 + 46.23 + 933.51 = <strong>$1,027.75</strong></p>
+              <p>The bond trades at a <em>premium</em> because the coupon rate (5%) exceeds the discount rate (4%).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2 -->
+        <div class="cfa-tabs__panel" role="tabpanel" id="eq-p2" aria-labelledby="eq-t2">
+          <div class="cfa-exploration__setup">
+            <p>Same bond — face value <strong>$1,000</strong>, 5% annual coupon, 3 years to maturity. The market discount rate is now <strong>6%</strong>.</p>
+          </div>
+          <p class="cfa-exploration__question">How does the price change compared to Question 1, and why?</p>
+          <div class="cfa-expand">
+            <button type="button" class="cfa-expand__trigger" aria-expanded="false"
+                    aria-controls="eq-ans-2" aria-label="Check answer for Question 2">
+              <span class="cfa-expand__icon" aria-hidden="true"></span>
+              Check Answer
+            </button>
+            <div class="cfa-expand__body" id="eq-ans-2">
+              <p>P = 50/1.06 + 50/1.06² + 1,050/1.06³ = <strong>$973.35</strong></p>
+              <p>The price <em>falls below par</em> — the coupon rate (5%) is now less than the discount rate (6%). This demonstrates the inverse relationship between bond prices and yields.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3 -->
+        <div class="cfa-tabs__panel" role="tabpanel" id="eq-p3" aria-labelledby="eq-t3">
+          <div class="cfa-exploration__setup">
+            <p>A zero-coupon bond has a face value of <strong>$1,000</strong>, matures in <strong>5 years</strong>, and the market discount rate is <strong>3%</strong>.</p>
+          </div>
+          <p class="cfa-exploration__question">What should an investor pay for this bond today?</p>
+          <div class="cfa-expand">
+            <button type="button" class="cfa-expand__trigger" aria-expanded="false"
+                    aria-controls="eq-ans-3" aria-label="Check answer for Question 3">
+              <span class="cfa-expand__icon" aria-hidden="true"></span>
+              Check Answer
+            </button>
+            <div class="cfa-expand__body" id="eq-ans-3">
+              <p>PV = 1,000 / (1.03)<sup>5</sup> = 1,000 / 1.1593 = <strong>$862.61</strong></p>
+              <p>No intermediate coupons — the $137.39 difference between purchase price and face value is the investor's total return.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 4 -->
+        <div class="cfa-tabs__panel" role="tabpanel" id="eq-p4" aria-labelledby="eq-t4">
+          <div class="cfa-exploration__setup">
+            <p>Two bonds are identical except for maturity: <strong>Bond A</strong> matures in 2 years, <strong>Bond B</strong> in 10 years. Both have a 5% annual coupon and $1,000 face value. The market discount rate rises from 5% to 6%.</p>
+          </div>
+          <p class="cfa-exploration__question">Which bond falls more in price? What principle does this illustrate?</p>
+          <div class="cfa-expand">
+            <button type="button" class="cfa-expand__trigger" aria-expanded="false"
+                    aria-controls="eq-ans-4" aria-label="Check answer for Question 4">
+              <span class="cfa-expand__icon" aria-hidden="true"></span>
+              Check Answer
+            </button>
+            <div class="cfa-expand__body" id="eq-ans-4">
+              <p><strong>Bond A</strong> at 6%: $981.67 → falls 1.83%</p>
+              <p><strong>Bond B</strong> at 6%: $926.40 → falls 7.36%</p>
+              <p>Bond B falls much further, illustrating <em>duration risk</em>: longer-maturity bonds are more sensitive to rate changes because a larger share of their value comes from distant cash flows.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.cfa-tabs -->
+    </div><!-- /.cfa-exploration -->
+  </section>
+
+
+  <!-- ============================================================
+    HTML SNIPPET
+    ============================================================ -->
+  <section class="section" id="snippet">
+    <p class="section-label">HTML snippet — paste into Canvas page</p>
+
+    <details class="snippet" open>
+      <summary>▸ Full .cfa-exploration structure</summary>
+      <pre>&lt;div class="cfa-exploration"&gt;
+
+  &lt;!-- Heading — aria-hidden because the tablist label covers it --&gt;
+  &lt;div class="cfa-exploration__heading" aria-hidden="true"&gt;
+    &lt;span class="cfa-exploration__heading-icon"&gt;&amp;#9672;&lt;/span&gt;
+    &lt;span class="cfa-exploration__title"&gt;Exploration Questions&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class="cfa-tabs"&gt;
+    &lt;div class="cfa-tabs__list" role="tablist" aria-label="Exploration Questions"&gt;
+      &lt;button type="button" class="cfa-tabs__tab" role="tab"
+              aria-selected="true"  aria-controls="eq-p1" id="eq-t1"&gt;Question 1&lt;/button&gt;
+      &lt;button type="button" class="cfa-tabs__tab" role="tab"
+              aria-selected="false" aria-controls="eq-p2" id="eq-t2"&gt;Question 2&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Panel 1 — first panel gets data-active --&gt;
+    &lt;div class="cfa-tabs__panel" role="tabpanel" id="eq-p1"
+         aria-labelledby="eq-t1" data-active&gt;
+
+      &lt;div class="cfa-exploration__setup"&gt;
+        &lt;p&gt;Set-up values / scenario here.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;p class="cfa-exploration__question"&gt;Your question here.&lt;/p&gt;
+
+      &lt;!-- Unique aria-label per button so voice control can target them --&gt;
+      &lt;div class="cfa-expand"&gt;
+        &lt;button type="button" class="cfa-expand__trigger" aria-expanded="false"
+                aria-controls="eq-ans-1" aria-label="Check answer for Question 1"&gt;
+          &lt;span class="cfa-expand__icon" aria-hidden="true"&gt;&lt;/span&gt;
+          Check Answer
+        &lt;/button&gt;
+        &lt;div class="cfa-expand__body" id="eq-ans-1"&gt;
+          &lt;p&gt;Answer here.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;&lt;!-- /#eq-p1 --&gt;
+
+    &lt;!-- Panel 2 --&gt;
+    &lt;div class="cfa-tabs__panel" role="tabpanel" id="eq-p2"
+         aria-labelledby="eq-t2"&gt;
+      &lt;div class="cfa-exploration__setup"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+      &lt;p class="cfa-exploration__question"&gt;…&lt;/p&gt;
+      &lt;div class="cfa-expand"&gt;
+        &lt;button type="button" class="cfa-expand__trigger" aria-expanded="false"
+                aria-controls="eq-ans-2" aria-label="Check answer for Question 2"&gt;
+          &lt;span class="cfa-expand__icon" aria-hidden="true"&gt;&lt;/span&gt;
+          Check Answer
+        &lt;/button&gt;
+        &lt;div class="cfa-expand__body" id="eq-ans-2"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;!-- /#eq-p2 --&gt;
+
+  &lt;/div&gt;&lt;!-- /.cfa-tabs --&gt;
+&lt;/div&gt;&lt;!-- /.cfa-exploration --&gt;</pre>
+    </details>
+  </section>
+
+
+  <!-- ============================================================
+    NOTES
+    ============================================================ -->
+  <section class="section" id="notes">
+    <p class="section-label">Implementation notes</p>
+    <div class="cfa-callout cfa-callout--note">
+      <div class="cfa-callout__head">
+        <i class="fas fa-info-circle cfa-callout__icon" aria-hidden="true"></i>
+        <span class="cfa-callout__title">No extra JS</span>
+      </div>
+      <div class="cfa-callout__body">
+        <p>The <code>.cfa-exploration</code> component uses the existing tab and expand behaviour from <code>cfa-components.js</code>. Nothing new to add.</p>
+      </div>
+    </div>
+    <div class="cfa-callout cfa-callout--warning">
+      <div class="cfa-callout__head">
+        <i class="fas fa-exclamation-triangle cfa-callout__icon" aria-hidden="true"></i>
+        <span class="cfa-callout__title">Unique IDs per page</span>
+      </div>
+      <div class="cfa-callout__body">
+        <p>If two <code>.cfa-exploration</code> blocks appear on the same Canvas page, give each its own ID prefix — e.g. <code>eq2-t1</code> / <code>eq2-p1</code> — to avoid duplicate IDs breaking ARIA associations.</p>
+      </div>
+    </div>
+    <div class="cfa-callout cfa-callout--tip">
+      <div class="cfa-callout__head">
+        <i class="far fa-lightbulb cfa-callout__icon" aria-hidden="true"></i>
+        <span class="cfa-callout__title">Voice control</span>
+      </div>
+      <div class="cfa-callout__body">
+        <p>Each Check Answer button has a unique <code>aria-label</code> ("Check answer for Question 1", etc.) so Dragon NaturallySpeaking and Voice Control users can target specific buttons even though the visible text is identical.</p>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<script src="cfa-components.js"></script>
+</body>
+</html>
