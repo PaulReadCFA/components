@@ -103,8 +103,6 @@
   }
   @media (max-width: 560px) { .list-grid { grid-template-columns: 1fr; } }
 
-  /* MathJax stand-in for demo */
-  .mjx { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 1.05em; }
   sub, sup { font-size: 0.72em; }
 </style>
 </head>
@@ -137,7 +135,7 @@
       <h2>1 — Expandable Box</h2>
       <span class="badge">Needs JS</span>
     </div>
-    <p class="note">Dark blue header = closed. Bright blue = open. Add <code>data-open</code> to pre-expand.</p>
+    <p class="note">Dark blue header = closed. Bright blue = open. Add <code>data-open</code> to pre-expand. Math in tabs and equation boxes uses <strong>MathJax 3</strong> (see end of page).</p>
 
     <div class="demo-area">
       <div class="cfa-expand">
@@ -269,7 +267,7 @@
       <h2>3 — Horizontal Tabs</h2>
       <span class="badge">Needs JS</span>
     </div>
-    <p class="note">Tabs are proper buttons on a grey track. Active = dark blue fill. Keyboard: ← → Home End.</p>
+    <p class="note">Tabs are proper buttons on a grey track. Active = dark blue fill. Keyboard: ← → Home End. The Formula tab includes <strong>MathJax</strong> display and inline math (requires network for the CDN script).</p>
 
     <div class="demo-area">
       <div class="cfa-tabs">
@@ -283,8 +281,8 @@
           <p><strong>Bond valuation</strong> is the process of determining the fair price of a bond — the present value of all expected cash flows.</p>
         </div>
         <div class="cfa-tabs__panel" role="tabpanel" id="tb-p2" aria-labelledby="tb-t2">
-          <p class="mjx">P = C/(1+r) + C/(1+r)² + … + (C+F)/(1+r)<sup>n</sup></p>
-          <p>Where <em>C</em> = coupon, <em>F</em> = face value, <em>r</em> = discount rate, <em>n</em> = periods.</p>
+          <p>\[ P = \frac{C}{1+r} + \frac{C}{(1+r)^2} + \cdots + \frac{C+F}{(1+r)^n} \]</p>
+          <p>Where \(C\) = coupon, \(F\) = face value, \(r\) = discount rate, \(n\) = periods.</p>
         </div>
         <div class="cfa-tabs__panel" role="tabpanel" id="tb-p3" aria-labelledby="tb-t3">
           <p>3-year bond · 5% coupon · $1,000 face · 4% discount rate → P = <strong>$1,027.75</strong></p>
@@ -322,19 +320,20 @@
       <h2>4 — Equation Box</h2>
       <span class="badge">CSS only</span>
     </div>
+    <p class="note">The <code>.cfa-equation</code> shell is CSS-only. The live examples below use <strong>MathJax 3</strong> (<code>\[ … \]</code> display, <code>\( … \)</code> inline) loaded from the CDN at the bottom of this page.</p>
 
     <div class="demo-area">
       <p class="sub-label">Left-ruled (default)</p>
       <div class="cfa-equation">
         <span class="cfa-equation__label">Bond Pricing</span>
         <span class="cfa-equation__num">Eq. 1</span>
-        <span class="mjx">P = Σ C<sub>t</sub> / (1 + r)<sup>t</sup> + F / (1 + r)<sup>n</sup></span>
+        \[ P = \sum_{t=1}^{n} \frac{C_t}{(1+r)^t} + \frac{F}{(1+r)^n} \]
       </div>
 
       <p class="sub-label">Centred — <code>cfa-equation--centered</code></p>
       <div class="cfa-equation cfa-equation--centered">
         <span class="cfa-equation__label">Dividend Discount Model</span>
-        <span class="mjx">P₀ = D₁ / (k<sub>e</sub> − g)</span>
+        \[ P_0 = \frac{D_1}{k_e - g} \]
       </div>
     </div>
 
@@ -771,6 +770,17 @@
 
 </main>
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <script src="cfa-components.js"></script>
+<script src="mathjax-demo-boot.js"></script>
 </body>
 </html>

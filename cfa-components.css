@@ -1,5 +1,5 @@
 /* ================================================================
-   CFA Canvas Component Library  —  cfa-components.css  v2.5
+   CFA Canvas Component Library  —  cfa-components.css  v2.6
    ─────────────────────────────────────────────────────────────
    Canvas deployment : Admin > Themes > Custom CSS (paste all)
    Local dev         : <link rel="stylesheet" href="cfa-components.css">
@@ -289,11 +289,11 @@
   /* ================================================================
      05  EQUATION BOX   .cfa-equation
      ─────────────────────────────────────────────────────────────
-     HTML:
+     HTML: wrap TeX in display \[ … \] or inline \( … \) when MathJax is loaded.
        <div class="cfa-equation">
          <span class="cfa-equation__label">Bond Pricing</span>
          <span class="cfa-equation__num">Eq. 1</span>
-         \[ … MathJax … \]
+         \[ … \]
        </div>
        <div class="cfa-equation cfa-equation--centered"> … </div>
      ================================================================ */
@@ -327,6 +327,18 @@
     font-size: 0.78em;
     color: var(--cfa-c-muted);
     margin-top: 0.2em;
+  }
+
+  /* MathJax 3 output (tex-svg) inside equation boxes */
+  .cfa-equation mjx-container {
+    display: block;
+    margin: 0.4em 0 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .cfa-equation--centered mjx-container {
+    margin-left: auto;
+    margin-right: auto;
   }
   
   

@@ -116,7 +116,7 @@
     ============================================================ -->
   <section class="section" id="demo">
     <p class="section-label">Live demo — Bond Valuation</p>
-    <p class="note">Tab through questions. Reveal answers with the green button. Keyboard: ← → on tabs, Space/Enter on Check Answer.</p>
+    <p class="note">Tab through questions. Reveal answers with the green button. Keyboard: ← → on tabs, Space/Enter on Check Answer. Answer panels use <strong>MathJax</strong> (CDN); math re-renders when you open a panel.</p>
 
     <div class="cfa-exploration">
 
@@ -147,7 +147,7 @@
             </button>
             <div class="cfa-expand__body" id="eq-ans-1">
               <p>Discount each cash flow at 4%:</p>
-              <p>P = 50/1.04 + 50/1.04² + 1,050/1.04³ = 48.08 + 46.23 + 933.51 = <strong>$1,027.75</strong></p>
+              <p>\[ P = \frac{50}{1.04} + \frac{50}{1.04^2} + \frac{1050}{1.04^3} \approx 1027.75 \]</p>
               <p>The bond trades at a <em>premium</em> because the coupon rate (5%) exceeds the discount rate (4%).</p>
             </div>
           </div>
@@ -166,7 +166,7 @@
               Check Answer
             </button>
             <div class="cfa-expand__body" id="eq-ans-2">
-              <p>P = 50/1.06 + 50/1.06² + 1,050/1.06³ = <strong>$973.35</strong></p>
+              <p>\[ P = \frac{50}{1.06} + \frac{50}{1.06^2} + \frac{1050}{1.06^3} \approx 973.35 \]</p>
               <p>The price <em>falls below par</em> — the coupon rate (5%) is now less than the discount rate (6%). This demonstrates the inverse relationship between bond prices and yields.</p>
             </div>
           </div>
@@ -185,7 +185,7 @@
               Check Answer
             </button>
             <div class="cfa-expand__body" id="eq-ans-3">
-              <p>PV = 1,000 / (1.03)<sup>5</sup> = 1,000 / 1.1593 = <strong>$862.61</strong></p>
+              <p>\[ \mathrm{PV} = \frac{1000}{(1.03)^5} \approx 862.61 \]</p>
               <p>No intermediate coupons — the $137.39 difference between purchase price and face value is the investor's total return.</p>
             </div>
           </div>
@@ -333,6 +333,17 @@
 
 </main>
 
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <script src="cfa-components.js"></script>
+<script src="mathjax-demo-boot.js"></script>
 </body>
 </html>

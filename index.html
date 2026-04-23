@@ -298,6 +298,7 @@
     <ul>
       <li>Switch to the HTML source view in the RCE editor</li>
       <li>Paste the relevant HTML snippet from the demo pages</li>
+      <li>For <strong>MathJax</strong> in equation boxes: Canvas pages must load MathJax (or KaTeX) globally—see how <code>demo-library.html</code> / <code>demo-exploration.html</code> include the CDN script and <code>mathjax-demo-boot.js</code> for tabs/expanders. Theme-level script is the usual place.</li>
       <li>For pages with multiple <code>.cfa-exploration</code> blocks, ensure tab/panel IDs are unique — use a different prefix per block (e.g. <code>eq2-tab-1</code> / <code>eq2-panel-1</code>)</li>
       <li>Canvas may strip some attributes — test after saving. The components use only <code>class</code>, <code>id</code>, <code>aria-*</code>, <code>role</code>, <code>data-*</code>, and <code>tabindex</code>, all of which Canvas allows</li>
     </ul>
