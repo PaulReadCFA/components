@@ -291,14 +291,14 @@
      ─────────────────────────────────────────────────────────────
      HTML: wrap TeX in display \[ … \] or inline \( … \) when MathJax is loaded.
        <div class="cfa-equation">
-         <span class="cfa-equation__label">Bond Pricing</span>
-         <span class="cfa-equation__num">Eq. 1</span>
+         <span class="cfa-equation__label">Optional title</span>
+         <span class="cfa-equation__num">Equation 1</span>
          \[ … \]
        </div>
        <div class="cfa-equation cfa-equation--centered"> … </div>
      ================================================================ */
   .cfa-equation {
-    background: var(--cfa-warm-white);
+    background: #F8F9FA;
     border-left: 4px solid var(--cfa-bright-blue);
     border-radius: 0 var(--cfa-radius-lg) var(--cfa-radius-lg) 0;
     padding: 0.9em 1.4em;
